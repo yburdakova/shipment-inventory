@@ -4,24 +4,27 @@
 
 :root{
   --background-color: #ECECEC;
+  --foreground-color:#646363;
   --font-color: #2D2C2C;
   --subtitle-color: #484747;
   --accent-color: #284C63;
   --primary-color: #4292f3;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root{
-    --background-color: #2D2C2C;
-    --font-color: #ECECEC;
-    --subtitle-color: #284C63;
-    --accent-color: #484747;
-    --primary-color: #4292f3;
-  }
-}
 
 body{
   background: var(--background-color);
   color: var(--font-color);
   font-family: 'Poppins', sans-serif;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  margin: 0;
+}
+
+.hidden-input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
