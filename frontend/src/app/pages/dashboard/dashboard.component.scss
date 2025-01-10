@@ -1,0 +1,14 @@
+.logout-icon-box{
+  display: flex;
+  width: 100px;
+  cursor: pointer;
+
+  img{
+    width: 100%;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
