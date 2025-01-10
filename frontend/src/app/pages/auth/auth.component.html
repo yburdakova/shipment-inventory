@@ -8,7 +8,14 @@
       <div class="scan-icon-box">
         <img src="assets/icons/qr_code_scanner.svg" alt="">
       </div>
-      <input class="hidden-input" type="text">
+      <input
+        id="scan-auth"
+        #scanInput
+        type="text"
+        class="hidden-input"
+        (blur)="setFocus()"
+      />
 
+      <span class="logo-box-note">Notification</span>
     </div>
 </div>
