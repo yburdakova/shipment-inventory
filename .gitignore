@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+dist/
+
+# Angular build output
+frontend/dist/
+
+# Logs
+logs/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE and editor configs
+.vscode/
+.idea/
+
+# Environment variables
+.env
