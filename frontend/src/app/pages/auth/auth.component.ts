@@ -12,12 +12,18 @@ export class AuthComponent implements AfterViewInit {
   @ViewChild('scanInput') scanInput!: ElementRef;
   @ViewChild('note') note!: ElementRef;
 
+  loggedInUser: string | null = null;
+
   constructor(private router: Router) {}
 
   ngAfterViewInit() {
     this.setFocus();
-  }
 
+    this.loggedInUser = localStorage.getItem('loggedInUser');
+  if (this.loggedInUser) {
+    this.router.navigate(['/dashboard']);
+  }
+  }
   setFocus() {
     if (this.scanInput) {
       this.scanInput.nativeElement.focus();
