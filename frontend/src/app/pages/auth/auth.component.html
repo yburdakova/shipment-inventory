@@ -12,10 +12,10 @@
         id="scan-auth"
         #scanInput
         type="text"
-        class="hidden-input"
+        class=""
         (blur)="setFocus()"
+        (keydown)="handleKeyPress($event)"
       />
-
-      <span class="logo-box-note">Notification</span>
+      <span id="note" #note class="logo-box-note"></span>
     </div>
 </div>

@@ -7,6 +7,7 @@
   padding: 40px;
   color: var(--accent-color);
   text-align: center;
+  position: relative;
 }
 
 .logo-box{
@@ -33,8 +34,19 @@
 .scan-icon-box{
   display: flex;
   width: 200px;
+  margin-bottom: 40px;
 
-img{
-  width: 100%;
+  img{
+    width: 100%;
+  }
 }
+
+.logo-box-note{
+  color: rgb(214, 2, 2);
+  font-weight: 500;
+  max-width: 300px;
+  text-align:center;
+  position: absolute;
+  bottom: 0;
+  margin: 10px;
 }
