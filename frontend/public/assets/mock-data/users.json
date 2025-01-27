@@ -1,0 +1,47 @@
+[
+  {
+    "ID": 0,
+    "FirstName": "Chris",
+    "LastName": "Koester",
+    "Email": "chris.k@courthousecomputersystems.com",
+    "CompanyID": 1,
+    "IsCCS": 0,
+    "IsActive": 1,
+    "IsWorking": 1,
+    "UserRoleID": 1,
+    "CurrentProjectID": 1,
+    "UserName": "chrisk",
+    "Password": "chrisk",
+    "AuthCode": "000"
+  },
+  {
+    "ID": 2,
+    "FirstName": "CJ",
+    "LastName": "Rowland",
+    "Email": "cj.r@courthousecomputersystems.com",
+    "CompanyID": 1,
+    "IsCCS": 0,
+    "IsActive": 1,
+    "IsWorking": 1,
+    "UserRoleID": 3,
+    "CurrentProjectID": 1,
+    "UserName": "cj",
+    "Password": "cj",
+    "AuthCode": "111"
+  },
+  {
+    "ID": 6,
+    "FirstName": "Yana",
+    "LastName": "Burdakova",
+    "Email": "yana.b@ccs-scan.com",
+    "CompanyID": 1,
+    "IsCCS": 0,
+    "IsActive": 1,
+    "IsWorking": 1,
+    "UserRoleID": 1,
+    "CurrentProjectID": 1,
+    "UserName": "yanab",
+    "Password": "yanab",
+    "AuthCode": "555"
+  }
+]

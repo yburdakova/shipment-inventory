@@ -10,6 +10,7 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'dashboard',
@@ -19,5 +20,6 @@ export const routes: Routes = [
         ]
       }
     ]
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
