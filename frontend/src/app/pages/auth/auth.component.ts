@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { MOCK_USERS } from '../../mock-data/auth-data';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../services/user.service';
+import { API_BASE_URL } from '../../constants/api.constants';
 
 @Component({
   selector: 'app-auth',
@@ -12,18 +14,19 @@ export class AuthComponent implements AfterViewInit {
   @ViewChild('scanInput') scanInput!: ElementRef;
   @ViewChild('note') note!: ElementRef;
 
-  loggedInUser: string | null = null;
+  private apiUrl = `${API_BASE_URL}/auth/login`;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient, private userService: UserService) {}
 
   ngAfterViewInit() {
     this.setFocus();
 
-    this.loggedInUser = localStorage.getItem('loggedInUser');
-  if (this.loggedInUser) {
-    this.router.navigate(['/dashboard']);
+    const user = this.userService.getUser();
+    if (user) {
+      this.router.navigate(['/dashboard']);
+    }
   }
-  }
+
   setFocus() {
     if (this.scanInput) {
       this.scanInput.nativeElement.focus();
@@ -33,22 +36,21 @@ export class AuthComponent implements AfterViewInit {
   handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       const authCode = this.scanInput.nativeElement.value.trim();
-
-      const user = MOCK_USERS.find(u => u.AuthCode === authCode);
-
-      if (!user) {
-        this.displayMessage('User not found');
-        return;
-      }
-
-      if (user.UserRoleID !== 1) {
-        this.displayMessage('Insufficient access level');
-        return;
-      }
-
-      this.saveUserToState(user);
-      this.router.navigate(['/dashboard']);
+      this.authenticateUser(authCode);
     }
+  }
+
+  authenticateUser(authCode: string) {
+    this.http.post<any>(this.apiUrl, { authCode }).subscribe({
+      next: (response) => {
+        this.userService.setUser(response);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.displayMessage(error.error.error || 'An error occurred');
+        console.error('Auth error:', error);
+      }
+    });
   }
 
   displayMessage(message: string) {
@@ -56,9 +58,5 @@ export class AuthComponent implements AfterViewInit {
       this.note.nativeElement.textContent = message;
     }
     this.scanInput.nativeElement.value = '';
-  }
-
-  saveUserToState(user: any) {
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
   }
 }

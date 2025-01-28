@@ -4,17 +4,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UserService {
-  private user: { FirstName: string; LastName: string } | null = null;
+  private storageKey = 'loggedInUser';
 
   setUser(user: { FirstName: string; LastName: string }): void {
-    this.user = user;
+    localStorage.setItem(this.storageKey, JSON.stringify(user));
   }
 
-  getUser(): { FirstName: string; LastName: string } | null {
-    return this.user;
+  getUser(): { firstName: string; lastName: string } | null {
+    const userData = localStorage.getItem(this.storageKey);
+    return userData ? JSON.parse(userData) : null;
   }
 
   clearUser(): void {
-    this.user = null;
+    localStorage.removeItem(this.storageKey);
   }
 }
