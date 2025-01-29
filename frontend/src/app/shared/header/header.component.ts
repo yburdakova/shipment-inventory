@@ -24,6 +24,10 @@ export class HeaderComponent {
     }
   }
 
+  navigate(path:string): void {
+    this.router.navigate([path]);
+  }
+
   logout(): void {
     localStorage.removeItem('loggedInUser');
     this.userService.clearUser(); 

@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     
     this.loggedInUser = this.userService.getUser();
-    console.log( this.loggedInUser)
     if (!this.loggedInUser) {
       this.router.navigate(['/']);
       return;
