@@ -81,7 +81,8 @@ shipment-inventory/
 │   ├── src/           # Source code
 │   ├── angular.json   # Angular CLI configuration
 │   └── ...
-├── backend/           # Backend (to be implemented)
+├── backend/           # Backend
+│   ├── routes/        # API routes
 ├── README.md          # Project documentation
 └── .gitignore         # Git ignore rules
 ```
