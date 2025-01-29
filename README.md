@@ -19,7 +19,7 @@ A full-stack application designed for efficient management of shipment inventory
 - **Architecture**: Built as a full-stack application for scalability and maintainability.
 - **Front-end**: Developed with Angular (v16.0) for a dynamic user interface.
 - **Styling**: Sass (SCSS) for customizable and modular styling.
-- **Back-end**: To be implemented, designed to support seamless integration with the front-end.
+- **Back-end**: Implemented with Express.js and MySQL, designed to support seamless integration with the front-end.
 
 ---
 
