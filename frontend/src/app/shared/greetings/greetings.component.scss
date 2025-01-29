@@ -1,0 +1,20 @@
+:host{
+    display: flex;
+    justify-content: space-between;
+    align-items: first baseline;
+    margin-top: 1.8rem;
+    margin-bottom: 0.8em;
+}
+
+.tool-name{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+@media screen and (max-width: 560px){
+    :host{
+      flex-direction:column-reverse;
+      margin-top: 0.8rem;
+    }
+}

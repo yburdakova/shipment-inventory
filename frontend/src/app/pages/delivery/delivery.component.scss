@@ -1,0 +1,111 @@
+.container{
+    display: flex;
+    gap:4rem;
+    width: 100%;
+}
+
+.bold{
+    font-weight: bold;
+}
+.general-info{
+    width: 260px;
+}
+.box-container{
+    font-size: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.4rem;
+    height:fit-content;
+    max-height: 680px;
+    overflow-y: auto;
+    width: 100%;
+}
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 0.4rem;
+    height:fit-content;
+    font-size: 12px;
+    font-weight: bold;
+    color:rgb(170, 175, 175);
+    border: 1px solid var(--accent-color);
+    text-align: center;
+}
+
+.delivered{
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.icon-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.note-box{
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    width: 100%;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    margin: 20px 0;
+    height: 80px;
+
+    svg{
+        width: 48px;
+        height: 48px;
+    }
+
+}
+
+.success{
+    svg{
+        fill: green;
+    }
+    span{
+        color: green;
+    }
+}
+
+.error{
+    svg{
+        fill: red;
+    }
+    span{
+        color: red;
+    }
+}
+
+
+
+@media screen and (max-width: 1024px){
+
+}
+
+@media screen and (max-width: 768px){
+
+}
+
+@media screen and (max-width: 600px){
+    .container{
+        flex-direction: column;
+    }
+    .box-container{
+        max-height: none;
+    }
+    .general-info{
+        width: 100%;
+    }
+    .note-box{
+        height: 60px;
+    }
+
+}
+
+

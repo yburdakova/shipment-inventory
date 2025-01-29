@@ -10,15 +10,34 @@
   --primary-color: #4292f3;
 }
 
+
 body{
   background: var(--background-color);
   color: var(--font-color);
-  font-size: clamp(0.8rem, 2.5vw, 1.4rem);
   font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: center;
   scroll-behavior: smooth;
 
+}
+.btn{
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  background-color: var(--accent-color);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+
+  &:hover{
+    background-color: var(--primary-color);
+  }
 }
 
 .hidden-input {
@@ -38,6 +57,20 @@ body{
     max-width: 100px;
     transition: transform 0.3s ease;
   }
+}
+
+.scan-icon-box{
+  display: flex;
+  width: 200px;
+  margin-bottom: 40px;
+
+  img{
+    width: 100%;
+  }
+}
+
+.icon-lable {
+  text-align: center;
 }
 
 .icons-btn{
@@ -69,5 +102,11 @@ body{
     span{
       color: (var(--accent-color));
     }
+  }
+}
+
+@media screen and (max-width: 320px){
+  .icons-btn{
+    padding: 0.2rem;
   }
 }
