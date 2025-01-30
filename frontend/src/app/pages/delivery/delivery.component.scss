@@ -37,6 +37,7 @@
 .delivered{
     background-color: var(--accent-color);
     color: white;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .icon-box{
@@ -76,22 +77,18 @@
     }
 }
 
-/* Show animation when statusMessage is updated */
 .note-box.show {
     opacity: 1;
 }
 
-/* Animate SVG with a clockwise spin */
 .note-box.show svg {
     animation: rotateIn 0.3s ease-out forwards;
 }
 
-/* Animate text appearance */
 .note-box.show span {
     animation: fadeIn 0.3s ease-in-out forwards;
 }
 
-/* Clockwise rotation animation */
 @keyframes rotateIn {
     from {
         transform: rotate(-180deg);
@@ -103,7 +100,6 @@
     }
 }
 
-/* Opacity animation for span */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -134,11 +130,12 @@
 
 .context-menu {
     position: absolute;
-    background: white;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
 }
 
 .context-menu button {
