@@ -9,9 +9,8 @@ import { BoxedService } from '../../services/boxed.service';
   templateUrl: './delivery.component.html',
   styleUrl: './delivery.component.scss'
 })
-export class DeliveryComponent implements AfterViewInit{
+export class DeliveryComponent implements AfterViewInit {
   @ViewChild('scanBoxInput') scanBoxInput!: ElementRef;
-  @ViewChild('deliveryNote') deliveryNote!: ElementRef;
   boxedList: any[] = [];
   deliveredList: any[] = [];
   statusMessage: string = "";
@@ -24,10 +23,9 @@ export class DeliveryComponent implements AfterViewInit{
   selectedBox: any = null;
   longPressTimeout: any = null;
   
-  
-  constructor(
-     private boxedService: BoxedService,
-  ) {}
+  private readonly STORAGE_KEY = "deliveredBoxes";
+
+  constructor(private boxedService: BoxedService) {}
 
   @HostListener('document:click', ['$event'])
   closeContextMenu(event: MouseEvent) {
@@ -35,15 +33,34 @@ export class DeliveryComponent implements AfterViewInit{
       this.contextMenuVisible = false;
     }
   }
+
   ngAfterViewInit() {
     this.setFocus();
   }
 
-  setFocus() {
+  ngOnInit(): void {
+    this.refreshBoxedList();
+    this.loadDeliveredList();
+  }
 
+  setFocus() {
     if (this.scanBoxInput) {
       this.scanBoxInput.nativeElement.focus();
     }
+  }
+
+  /** Load deliveredList from localStorage on page reload */
+  private loadDeliveredList() {
+    const savedData = localStorage.getItem(this.STORAGE_KEY);
+    if (savedData) {
+      this.deliveredList = JSON.parse(savedData);
+      console.log("Restored deliveredList from localStorage:", this.deliveredList);
+    }
+  }
+
+  /** Save deliveredList to localStorage */
+  private saveDeliveredList() {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.deliveredList));
   }
 
   handleKeyPress(event: KeyboardEvent) {
@@ -51,7 +68,6 @@ export class DeliveryComponent implements AfterViewInit{
       const barcode = this.scanBoxInput.nativeElement.value.trim();
       this.processScan(barcode);
     }
-    
   }
 
   processScan(barcode: string): void {
@@ -71,15 +87,16 @@ export class DeliveryComponent implements AfterViewInit{
     const box = this.boxedList.find(item => item.BoxGUID === barcode);
     if (box) {
       this.deliveredList.push(box);
+      this.saveDeliveredList(); // Save to localStorage
       this.displayMessage("Ready to Delivery!", "success");
-      console.log(this.deliveredList)
+      console.log("Updated deliveredList:", this.deliveredList);
     }
   }
 
   displayMessage(message: string, type: 'success' | 'error'): void {
     this.statusMessage = "";
     this.statusType = "";
-    
+
     setTimeout(() => {
         this.statusMessage = message;
         this.statusType = type;
@@ -87,7 +104,12 @@ export class DeliveryComponent implements AfterViewInit{
 
     this.scanBoxInput.nativeElement.value = '';
     this.setFocus();
-}
+
+    setTimeout(() => {
+        this.statusMessage = "";
+        this.statusType = "";
+    }, 3000);
+  }
 
   isDelivered(barcode: string): boolean {
     return this.deliveredList.some(item => item.BoxGUID === barcode);
@@ -107,6 +129,7 @@ export class DeliveryComponent implements AfterViewInit{
         console.log('Delivery response:', response);
         this.displayMessage("Delivery completed!", "success");
         this.deliveredList = [];
+        this.saveDeliveredList(); // Clear localStorage after success
         this.refreshBoxedList(); 
       },
       error: (error) => {
@@ -130,10 +153,6 @@ export class DeliveryComponent implements AfterViewInit{
     });
   }
 
-  ngOnInit(): void {
-    this.refreshBoxedList(); 
-  }
-
   openContextMenu(event: MouseEvent, box: any) {
     event.preventDefault();
     this.selectedBox = box;
@@ -141,7 +160,6 @@ export class DeliveryComponent implements AfterViewInit{
     this.contextMenuY = event.clientY;
     this.contextMenuVisible = true;
   }
-
 
   startLongPress(event: TouchEvent, box: any) {
     this.longPressTimeout = setTimeout(() => {
@@ -158,9 +176,16 @@ export class DeliveryComponent implements AfterViewInit{
 
   removeFromDelivered(box: any) {
     this.deliveredList = this.deliveredList.filter(item => item.BoxGUID !== box.BoxGUID);
+    this.saveDeliveredList();
     this.contextMenuVisible = false;
     this.displayMessage("Box removed!", "success");
-    console.log(this.deliveredList);
-    this.setFocus()
+    console.log("Updated deliveredList:", this.deliveredList);
+    this.setFocus();
   }
+
+  clearDeliveredList(): void {
+    this.deliveredList = [];
+    localStorage.removeItem(this.STORAGE_KEY);
+    this.displayMessage("Delivered list cleared!", "success");
+}
 }
