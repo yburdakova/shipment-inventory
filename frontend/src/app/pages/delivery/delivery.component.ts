@@ -77,16 +77,17 @@ export class DeliveryComponent implements AfterViewInit{
   }
 
   displayMessage(message: string, type: 'success' | 'error'): void {
-    this.statusMessage = message;
-    this.statusType = type;
+    this.statusMessage = "";
+    this.statusType = "";
+    
+    setTimeout(() => {
+        this.statusMessage = message;
+        this.statusType = type;
+    }, 100);
+
     this.scanBoxInput.nativeElement.value = '';
     this.setFocus();
-
-    // setTimeout(() => {
-    //   this.statusMessage = "";
-    //   this.statusType = "";
-    // }, 3000);
-  }
+}
 
   isDelivered(barcode: string): boolean {
     return this.deliveredList.some(item => item.BoxGUID === barcode);

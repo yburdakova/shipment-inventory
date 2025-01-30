@@ -47,8 +47,11 @@
     flex-direction: column;
     position: relative;
 }
+.icon-lable{
+    margin-top: 120px;
+}
 
-.note-block{
+.note-block {
     position: absolute;
     width: 260px;
     display: flex;
@@ -56,11 +59,7 @@
     left: 0;
 }
 
-.icon-lable{
-    margin-top: 120px;
-}
-
-.note-box{
+.note-box {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
@@ -69,14 +68,49 @@
     align-items: center; 
     text-align: center;
     margin: 20px 0;
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
-
     svg{
         width: 48px;
         height: 48px;
-         animation: drawSVG 1s ease-in-out forwards;
     }
+}
 
+/* Show animation when statusMessage is updated */
+.note-box.show {
+    opacity: 1;
+}
+
+/* Animate SVG with a clockwise spin */
+.note-box.show svg {
+    animation: rotateIn 0.3s ease-out forwards;
+}
+
+/* Animate text appearance */
+.note-box.show span {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+/* Clockwise rotation animation */
+@keyframes rotateIn {
+    from {
+        transform: rotate(-180deg);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* Opacity animation for span */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 
