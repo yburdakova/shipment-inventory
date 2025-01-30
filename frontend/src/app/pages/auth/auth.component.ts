@@ -11,8 +11,8 @@ import { API_BASE_URL } from '../../constants/api.constants';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements AfterViewInit {
-  @ViewChild('scanInput') scanInput!: ElementRef;
-  @ViewChild('note') note!: ElementRef;
+  @ViewChild('scanUserCardInput') scanUserCardInput!: ElementRef;
+  @ViewChild('authNote') authNote!: ElementRef;
 
   private apiUrl = `${API_BASE_URL}/auth/login`;
 
@@ -28,16 +28,17 @@ export class AuthComponent implements AfterViewInit {
   }
 
   setFocus() {
-    if (this.scanInput) {
-      this.scanInput.nativeElement.focus();
+    if (this.scanUserCardInput) {
+      this.scanUserCardInput.nativeElement.focus();
     }
   }
 
   handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      const authCode = this.scanInput.nativeElement.value.trim();
+      const authCode = this.scanUserCardInput.nativeElement.value.trim();
       this.authenticateUser(authCode);
     }
+    
   }
 
   authenticateUser(authCode: string) {
@@ -54,9 +55,9 @@ export class AuthComponent implements AfterViewInit {
   }
 
   displayMessage(message: string) {
-    if (this.note) {
-      this.note.nativeElement.textContent = message;
+    if (this.authNote) {
+      this.authNote.nativeElement.textContent = message;
     }
-    this.scanInput.nativeElement.value = '';
+    this.scanUserCardInput.nativeElement.value = '';
   }
 }

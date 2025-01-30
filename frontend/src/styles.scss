@@ -38,6 +38,10 @@ body{
   &:hover{
     background-color: var(--primary-color);
   }
+  &:disabled{
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 }
 
 .hidden-input {

@@ -9,14 +9,14 @@
         <img src="assets/icons/qr_code_scanner.svg" alt="QR-scanner Icon">
       </div>
       <input
-        id="scan-auth"
-        #scanInput
+        id="scanUserCardInput"
+        #scanUserCardInput
         type="text"
         class="hidden-input"
         autocomplete="off"
         (blur)="setFocus()"
         (keydown)="handleKeyPress($event)"
       />
-      <span id="note" #note class="logo-box-note"></span>
+      <span id="authNote" #authNote class="logo-box-note"></span>
     </div>
 </div>
