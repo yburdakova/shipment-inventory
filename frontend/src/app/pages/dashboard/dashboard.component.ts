@@ -32,15 +32,18 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    this.projectListService.getProjects().subscribe(
-      (data) => {
+    this.projectListService.getProjects().subscribe({
+      next: (data) => {
         this.projects = data;
         console.log('Projects loaded:', this.projects);
       },
-      (error) => {
+      error: (error) => {
         console.error('Error loading projects:', error);
+      },
+      complete: () => {
+        console.log('Project loading completed.');
       }
-    );
+    });
 
     const defaultProjectId = localStorage.getItem('defaultProjectId');
     if (defaultProjectId) {

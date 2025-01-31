@@ -1,4 +1,20 @@
-<h2>Project Details</h2>
-<p *ngIf="project">
-  <strong>Description:</strong> {{ project.Description }}
-</p>
+<h2 *ngIf="project">{{ project.Description }}</h2>
+<div *ngIf="stats">
+  <p><strong>Total:</strong>  {{ stats.total }}</p> 
+  <p><strong>Review completed:</strong>  {{ 
+    stats.statuses.reviewc + 
+    stats.statuses.finalized + 
+    stats.statuses.delivered }}
+  </p>
+  <p><strong>In progress:</strong>  {{ 
+    stats.statuses.inspected + 
+    stats.statuses.prep_init + 
+    stats.statuses.prep_completed +
+    stats.statuses.scan1i +
+    stats.statuses.scan1c +
+    stats.statuses.scan2i}}
+  </p>
+  <p><strong>Ready for review:</strong>  {{ 
+    stats.statuses.scan2c}}
+  </p>
+</div>
