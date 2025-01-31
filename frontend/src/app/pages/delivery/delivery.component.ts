@@ -105,10 +105,6 @@ export class DeliveryComponent implements AfterViewInit {
     this.scanBoxInput.nativeElement.value = '';
     this.setFocus();
 
-    setTimeout(() => {
-        this.statusMessage = "";
-        this.statusType = "";
-    }, 3000);
   }
 
   isDelivered(barcode: string): boolean {
@@ -129,7 +125,7 @@ export class DeliveryComponent implements AfterViewInit {
         console.log('Delivery response:', response);
         this.displayMessage("Delivery completed!", "success");
         this.deliveredList = [];
-        this.saveDeliveredList(); // Clear localStorage after success
+        this.saveDeliveredList();
         this.refreshBoxedList(); 
       },
       error: (error) => {
