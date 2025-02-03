@@ -21,7 +21,7 @@ export interface ProjectStats {
     average_pages: number;
     deliveries: {
       RegisterDate: string;
-      Number: number;
+      total_rows: number;
       first_box: string;
       last_box: string;
     }[];

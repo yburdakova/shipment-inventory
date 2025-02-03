@@ -1,3 +1,21 @@
 h2{
     margin: 0;
   }
+
+  .deliveries-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .deliveries-table th, .deliveries-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .deliveries-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  

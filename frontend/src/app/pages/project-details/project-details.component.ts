@@ -13,11 +13,11 @@ import { ProjectStats } from '../../models/stats.model';
 export class ProjectDetailsComponent implements OnInit {
   project: { ID: number; Description: string } | null = null;
   stats: ProjectStats | null = null;
+  deliveries: ProjectStats["deliveries"] = [];
 
   constructor(private route: ActivatedRoute, private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    // Подписываемся на изменения параметров маршрута
     this.route.paramMap.subscribe(() => {
       this.loadProject();
     });
@@ -38,7 +38,8 @@ export class ProjectDetailsComponent implements OnInit {
     this.projectService.getProjectStats(projectId).subscribe({
       next: (data) => {
         this.stats = data;
-        console.log('Project stats loaded:', this.stats);
+        this.deliveries = data.deliveries;
+        console.log('Project stats loaded:', this.stats, "Deliveries:", this.deliveries);
       },
       error: (error) => {
         console.error('Error loading project stats:', error);
@@ -47,5 +48,10 @@ export class ProjectDetailsComponent implements OnInit {
         console.log('Project stats loading completed.');
       }
     });
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   }
 }

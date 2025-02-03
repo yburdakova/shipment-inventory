@@ -83,7 +83,7 @@ router.get('/stats/:projectId', async (req, res) => {
                 returned: returned[0][0]?.total || 0
             },
             average_pages: avgPages[0][0]?.avg_pages || 0,
-            deliveries: deliveries[0] || []
+            deliveries: deliveries[0][0] || []
         });
 
     } catch (error) {

@@ -17,4 +17,25 @@
   <p><strong>Ready for review:</strong>  {{ 
     stats.statuses.scan2c}}
   </p>
+  <p><strong>Pages per box:</strong>  
+  {{ stats.average_pages | number:'1.0-0'}}
+  </p>
 </div>
+
+<table class="deliveries-table">
+  <thead>
+    <tr>
+      <th>Delivery Date</th>
+      <th>Number of Boxes</th>
+      <th>Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let delivery of deliveries">
+      <td>{{ formatDate(delivery.RegisterDate) }}</td>
+      <td>{{ delivery.total_rows }}</td>
+      <td>{{ delivery.first_box }} - {{ delivery.last_box }}</td>
+    </tr>
+  </tbody>
+</table>
+
