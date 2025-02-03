@@ -1,0 +1,10 @@
+<div class="progress-bar">
+    <div *ngFor="let segment of getSegments()"
+         class="progress-segment {{ segment.class }}"
+         [style.width.%]="getPercentage(segment.value)"
+         [attr.data-label]="segment.class | titlecase">
+      {{ segment.value }}
+    </div>
+  </div>
+  
+  
