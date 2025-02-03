@@ -18,6 +18,7 @@ export const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         children: [
+          { path: '', redirectTo: 'favorite', pathMatch: 'full' },
           { path: 'project/:id', component: ProjectDetailsComponent }
         ]
       },

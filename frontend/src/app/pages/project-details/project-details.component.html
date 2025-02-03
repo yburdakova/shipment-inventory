@@ -1,33 +1,28 @@
 <h2 *ngIf="project">{{ project.Description }}</h2>
-<div *ngIf="stats">
+
+<div *ngIf="stats && stats.total === 0 && stats.deliveries.length === 0" class="no-data">
+  There is no stats for this project in database
+</div>
+
+<div *ngIf="stats && (stats.total > 0 || stats.deliveries.length > 0)">
   <p><strong>Total:</strong>  {{ stats.total }}</p> 
-  <p><strong>Ready to return (Review completed):</strong>  {{ 
-    stats.statuses.reviewc + 
-    stats.statuses.finalized + 
-    stats.statuses.delivered }}
-  </p>
-  <p><strong>In progress:</strong>  {{ 
-    stats.statuses.inspected + 
-    stats.statuses.prep_init + 
-    stats.statuses.prep_completed +
-    stats.statuses.scan1i +
-    stats.statuses.scan1c +
-    stats.statuses.scan2i}}
-  </p>
   <p><strong>Pages per box:</strong>  
   {{ stats.average_pages | number:'1.0-0'}}
   </p> 
+  <div class="deliveries-grid">
+    <div class="grid-header">Delivery Date</div>
+    <div class="grid-header">Number of Boxes</div>
+    <div class="grid-header">Range</div>
+    <div class="grid-header">Progress</div>
+  
+    <ng-container *ngFor="let delivery of deliveries">
+      <div class="grid-item">{{ formatDate(delivery.RegisterDate) }}</div>
+      <div class="grid-item">{{ delivery.total_rows }}</div>
+      <div class="grid-item">{{ formatBoxRange(delivery.first_box, delivery.last_box) }}</div>
+      <div class="grid-item">Progress</div>
+    </ng-container>
+  </div>
 </div>
 
-<div class="deliveries-grid">
-  <div class="grid-header">Delivery Date</div>
-  <div class="grid-header">Number of Boxes</div>
-  <div class="grid-header">Range</div>
 
-  <ng-container *ngFor="let delivery of deliveries">
-    <div class="grid-item">{{ formatDate(delivery.RegisterDate) }}</div>
-    <div class="grid-item">{{ delivery.total_rows }}</div>
-    <div class="grid-item">{{ delivery.first_box }} - {{ delivery.last_box }}</div>
-  </ng-container>
-</div>
 

@@ -38,7 +38,9 @@ export class ProjectDetailsComponent implements OnInit {
       next: (data) => {
         console.log('Received stats:', data);
         this.stats = { ...data };
-        this.deliveries = JSON.parse(JSON.stringify(data.deliveries));
+        this.deliveries = JSON.parse(JSON.stringify(data.deliveries)).sort(
+          (a:any, b:any) => new Date(b.RegisterDate).getTime() - new Date(a.RegisterDate).getTime()
+        );;
 
       console.log('Updated deliveries:', this.deliveries);
 
@@ -57,4 +59,20 @@ export class ProjectDetailsComponent implements OnInit {
     const date = new Date(dateString);
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   }
+
+  formatBoxRange(firstBox: string, lastBox: string): string {
+    const firstMatch = firstBox.match(/^([A-Z]+)-(\d+)/);
+    const lastMatch = lastBox.match(/^([A-Z]+)-(\d+)/);
+  
+    if (firstMatch && lastMatch) {
+      const caseType = firstMatch[1];
+      const firstNumber = firstMatch[2];
+      const lastNumber = lastMatch[2];
+  
+      return `${caseType}: ${firstNumber}-${lastNumber}`;
+    }
+  
+    return `${firstBox} - ${lastBox}`;
+  }
+  
 }
