@@ -14,7 +14,6 @@ export class ProjectDetailsComponent implements OnInit {
   project: { ID: number; Description: string } | null = null;
   stats: ProjectStats | null = null;
   deliveries: ProjectStats["deliveries"] = [];
-
   constructor(private route: ActivatedRoute, private projectService: ProjectService) {}
 
   ngOnInit(): void {
@@ -37,9 +36,13 @@ export class ProjectDetailsComponent implements OnInit {
   private fetchProjectStats(projectId: number): void {
     this.projectService.getProjectStats(projectId).subscribe({
       next: (data) => {
-        this.stats = data;
-        this.deliveries = data.deliveries;
-        console.log('Project stats loaded:', this.stats, "Deliveries:", this.deliveries);
+        console.log('Received stats:', data);
+        this.stats = { ...data };
+        this.deliveries = JSON.parse(JSON.stringify(data.deliveries));
+
+      console.log('Updated deliveries:', this.deliveries);
+
+      setTimeout(() => this.deliveries = [...this.deliveries], 0);
       },
       error: (error) => {
         console.error('Error loading project stats:', error);

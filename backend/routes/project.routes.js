@@ -59,7 +59,8 @@ router.get('/stats/:projectId', async (req, res) => {
             pool.query('SELECT COUNT(*) AS total FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND StatusID = 15', [projectId]),
             pool.query('SELECT COUNT(*) AS total FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND StatusID = 16', [projectId]),
             pool.query('SELECT AVG(NumberOfPages) AS avg_pages FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND NumberOfPages > 0', [projectId]),
-            pool.query('CALL Get_ShipmentInv()')
+            pool.query('CALL Get_ShipmentInventory(?)', [projectId])
+
         ]);
 
         res.json({

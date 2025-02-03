@@ -1,7 +1,7 @@
 <h2 *ngIf="project">{{ project.Description }}</h2>
 <div *ngIf="stats">
   <p><strong>Total:</strong>  {{ stats.total }}</p> 
-  <p><strong>Review completed:</strong>  {{ 
+  <p><strong>Ready to return (Review completed):</strong>  {{ 
     stats.statuses.reviewc + 
     stats.statuses.finalized + 
     stats.statuses.delivered }}
@@ -14,28 +14,20 @@
     stats.statuses.scan1c +
     stats.statuses.scan2i}}
   </p>
-  <p><strong>Ready for review:</strong>  {{ 
-    stats.statuses.scan2c}}
-  </p>
   <p><strong>Pages per box:</strong>  
   {{ stats.average_pages | number:'1.0-0'}}
-  </p>
+  </p> 
 </div>
 
-<table class="deliveries-table">
-  <thead>
-    <tr>
-      <th>Delivery Date</th>
-      <th>Number of Boxes</th>
-      <th>Range</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let delivery of deliveries">
-      <td>{{ formatDate(delivery.RegisterDate) }}</td>
-      <td>{{ delivery.total_rows }}</td>
-      <td>{{ delivery.first_box }} - {{ delivery.last_box }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="deliveries-grid">
+  <div class="grid-header">Delivery Date</div>
+  <div class="grid-header">Number of Boxes</div>
+  <div class="grid-header">Range</div>
+
+  <ng-container *ngFor="let delivery of deliveries">
+    <div class="grid-item">{{ formatDate(delivery.RegisterDate) }}</div>
+    <div class="grid-item">{{ delivery.total_rows }}</div>
+    <div class="grid-item">{{ delivery.first_box }} - {{ delivery.last_box }}</div>
+  </ng-container>
+</div>
 
