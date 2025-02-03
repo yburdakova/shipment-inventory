@@ -1,0 +1,44 @@
+.progress-bar {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .progress-segment {
+    height: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    padding: 2px;
+    position: relative;
+  }
+
+  .progress-segment::before {
+    content: attr(data-label);
+    position: absolute;
+    font-size: 8px;
+    bottom: 100%;
+    left: 50%;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+  }
+
+  .progress-segment:hover::before {
+    opacity: 1;
+  }
+  
+
+
+  .untouched { background-color: rgb(122, 181, 249) }
+  .ip { background-color: rgb(246, 135, 135) }
+  .scanned { background-color: rgb(179, 102, 179) }
+  .reviewed { background-color: rgb(234, 234, 91) }
+  .returned { background-color: rgb(55, 206, 55) }
+  

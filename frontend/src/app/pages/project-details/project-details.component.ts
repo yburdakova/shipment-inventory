@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { ProjectStats } from '../../models/stats.model';
+import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
 
 @Component({
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, ProgressChartComponent],
   styleUrls: ['./project-details.component.scss']
 })
 export class ProjectDetailsComponent implements OnInit {

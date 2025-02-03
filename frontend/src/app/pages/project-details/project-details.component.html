@@ -19,7 +19,15 @@
       <div class="grid-item">{{ formatDate(delivery.RegisterDate) }}</div>
       <div class="grid-item">{{ delivery.total_rows }}</div>
       <div class="grid-item">{{ formatBoxRange(delivery.first_box, delivery.last_box) }}</div>
-      <div class="grid-item">Progress</div>
+      <div class="grid-item">
+        <app-progress-chart 
+          [untouched]="delivery.untouched"
+          [ip]="delivery.ip"
+          [scanned]="delivery.scanned"
+          [reviewed]="delivery.reviewed"
+          [returned]="delivery.returned">
+        </app-progress-chart>
+      </div>
     </ng-container>
   </div>
 </div>
