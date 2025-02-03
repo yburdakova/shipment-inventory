@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit {
   loggedInUser: { firstName: string; lastName: string } | null = null; 
   projects: any[] = [];
   selectedProjectId: number | null = null;
+  favoriteProjectId: number | null = null;
 
   constructor(
     private userService: UserService,
@@ -36,6 +37,11 @@ export class DashboardComponent implements OnInit {
       next: (data) => {
         this.projects = data;
         console.log('Projects loaded:', this.projects);
+        const savedFavoriteProjectId = localStorage.getItem('favoriteProjectId');
+        if (savedFavoriteProjectId) {
+          this.favoriteProjectId = parseInt(savedFavoriteProjectId, 10);
+          this.selectProjectById(this.favoriteProjectId);
+        }
       },
       error: (error) => {
         console.error('Error loading projects:', error);
@@ -45,21 +51,35 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    const defaultProjectId = localStorage.getItem('defaultProjectId');
-    if (defaultProjectId) {
-      this.selectedProjectId = parseInt(defaultProjectId, 10);
-      this.router.navigate(['/dashboard/project', this.selectedProjectId]);
-    }
+
+  const savedFavoriteProjectId = localStorage.getItem('favoriteProjectId');
+  if (savedFavoriteProjectId) {
+    this.favoriteProjectId = parseInt(savedFavoriteProjectId, 10);
+    this.selectProjectById(this.favoriteProjectId);
   }
+}
+
 
   selectProject(project: { ID: number; Description: string }): void {
     this.projectService.setProject(project);
+    this.selectedProjectId = project.ID;
     this.router.navigate(['/dashboard/project', project.ID]);
   }
 
-  setDefaultProject(projectId: number): void {
-    localStorage.setItem('defaultProjectId', projectId.toString());
+
+  setFavoriteProject(projectId: number): void {
+    this.favoriteProjectId = projectId;
+    localStorage.setItem('favoriteProjectId', projectId.toString());
   }
+
+
+  private selectProjectById(projectId: number): void {
+    const project = this.projects.find(p => p.ID === projectId);
+    if (project) {
+      this.selectProject(project);
+    }
+  }
+
 
   logout(): void {
     this.userService.clearUser();

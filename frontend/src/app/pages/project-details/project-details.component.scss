@@ -4,9 +4,8 @@ h2{
 
   .deliveries-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
     gap: 0.2rem;
-    padding: 10px;
     align-items: center;
     text-align: center;
   }
@@ -26,4 +25,11 @@ h2{
     border-radius: 5px;
 
   }
-  
+
+  .no-data {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #777;
+    margin-top: 20px;
+  }

@@ -3,10 +3,19 @@
   
     <h3>Projects:</h3>
     <ul>
-      <li *ngFor="let project of projects" (click)="selectProject(project)">
-        <label>
+      <li *ngFor="let project of projects">
+        <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        height="24px" 
+        viewBox="0 -960 960 960" 
+        width="24px" 
+        [class.favorite]="favoriteProjectId === project.ID" 
+        (click)="setFavoriteProject(project.ID)">
+        <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Z"/>
+      </svg>
+        <div class="label"  (click)="selectProject(project)">
           {{ project.Description }}
-        </label>
+        </div>
       </li>
     </ul>
   </div>
