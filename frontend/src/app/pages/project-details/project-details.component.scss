@@ -2,6 +2,16 @@ h2{
     margin: 0;
   }
 
+  p{
+    margin: 0;
+  }
+
+  .info-line {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
   .deliveries-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 2fr;
