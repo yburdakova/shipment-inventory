@@ -39,6 +39,8 @@ router.get('/stats/:projectId', async (req, res) => {
             returnedUns,
             returned,
             avgPages,
+            scanned_pages,
+            reviewed_pages,
             deliveries
         ] = await Promise.all([
             pool.query('SELECT COUNT(*) AS total FROM ccscasefilescanning.tblbox WHERE ProjectID = ?', [projectId]),
@@ -59,8 +61,10 @@ router.get('/stats/:projectId', async (req, res) => {
             pool.query('SELECT COUNT(*) AS total FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND StatusID = 15', [projectId]),
             pool.query('SELECT COUNT(*) AS total FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND StatusID = 16', [projectId]),
             pool.query('SELECT AVG(NumberOfPages) AS avg_pages FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND NumberOfPages > 0', [projectId]),
+            pool.query(`SELECT SUM(NumberOfPages) AS scanned_pages FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND StatusID IN (7, 8, 9, 10, 11, 12, 13, 16)`, [projectId]),
+            pool.query(`SELECT SUM(NumberOfPages) AS reviewed_pages FROM ccscasefilescanning.tblbox WHERE ProjectID = ? AND StatusID IN (11, 12, 13, 16)`, [projectId]),
             pool.query('CALL Get_ShipmentInventory(?)', [projectId])
-
+           
         ]);
 
         res.json({
@@ -84,6 +88,8 @@ router.get('/stats/:projectId', async (req, res) => {
                 returned: returned[0][0]?.total || 0
             },
             average_pages: avgPages[0][0]?.avg_pages || 0,
+            scanned_pages: scanned_pages[0][0]?.scanned_pages || 0,
+            reviewed_pages: reviewed_pages[0][0]?.reviewed_pages || 0,
             deliveries: deliveries[0][0] || []
         });
 

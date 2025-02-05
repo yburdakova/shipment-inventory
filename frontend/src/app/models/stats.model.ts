@@ -19,6 +19,8 @@ export interface ProjectStats {
       returned: number;
     };
     average_pages: number;
+    scanned_pages: number;
+    reviewed_pages: number;
     deliveries: {
       RegisterDate: string;
       total_rows: number;

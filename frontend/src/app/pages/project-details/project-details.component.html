@@ -5,10 +5,29 @@
 </div>
 
 <div *ngIf="stats && (stats.total > 0 || stats.deliveries.length > 0)">
-  <p><strong>Total:</strong>  {{ stats.total }}</p> 
-  <p><strong>Pages per box:</strong>  
-  {{ stats.average_pages | number:'1.0-0'}}
-  </p> 
+  <div class="info-line">
+    <p><strong>Total boxes:</strong>  {{ stats.total }}</p> 
+    <p><strong>Pages per box:</strong>  
+    {{ stats.average_pages | number:'1.0-0'}}
+    </p> 
+  </div>
+  <div class="info-line">
+    <p><strong>Scanned pages:</strong>  
+      {{ stats.scanned_pages }}
+      </p> 
+      <p><strong>Reviewed pages:</strong>  
+        {{ stats.reviewed_pages }}
+      </p> 
+  </div>
+  <div class="info-line">
+    <p><strong>Boxes in Storage:</strong>  
+      {{ stats.total - stats.statuses.returned_uns -stats.statuses.returned }}
+    </p> 
+    <p><strong>Ready for Return:</strong>  
+      {{ stats.statuses.reviewc + stats.statuses.uploaded + stats.statuses.finalized }}
+    </p> 
+  </div>
+  
   <div class="deliveries-grid">
     <div class="grid-header">Delivery Date</div>
     <div class="grid-header">Number of Boxes</div>
