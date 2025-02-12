@@ -49,7 +49,6 @@ export class DeliveryComponent implements AfterViewInit {
     }
   }
 
-  /** Load deliveredList from localStorage on page reload */
   private loadDeliveredList() {
     const savedData = localStorage.getItem(this.STORAGE_KEY);
     if (savedData) {
@@ -58,7 +57,6 @@ export class DeliveryComponent implements AfterViewInit {
     }
   }
 
-  /** Save deliveredList to localStorage */
   private saveDeliveredList() {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.deliveredList));
   }
@@ -87,7 +85,7 @@ export class DeliveryComponent implements AfterViewInit {
     const box = this.boxedList.find(item => item.BoxGUID === barcode);
     if (box) {
       this.deliveredList.push(box);
-      this.saveDeliveredList(); // Save to localStorage
+      this.saveDeliveredList();
       this.displayMessage("Ready to Delivery!", "success");
       console.log("Updated deliveredList:", this.deliveredList);
     }

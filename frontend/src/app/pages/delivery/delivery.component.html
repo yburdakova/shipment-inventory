@@ -39,7 +39,7 @@
     <div class="box-container">
       <div class="box" 
            *ngFor="let item of boxedList"
-           [ngClass]="{'delivered': isDelivered(item.BoxGUID)}"
+           [ngClass]="{'highlighted': isDelivered(item.BoxGUID)}"
            (contextmenu)="isDelivered(item.BoxGUID) ? openContextMenu($event, item) : null"
            (touchstart)="isDelivered(item.BoxGUID) ? startLongPress($event, item) : null"
            (touchend)="cancelLongPress()">
