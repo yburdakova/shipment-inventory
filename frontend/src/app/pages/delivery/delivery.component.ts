@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { BoxedService } from '../../services/boxed.service';
+import { extractCategoryAndNumber } from '../../shared/utils/box-utils';
 
 @Component({
   selector: 'app-delivery',
@@ -41,6 +42,40 @@ export class DeliveryComponent implements AfterViewInit {
   ngOnInit(): void {
     this.refreshBoxedList();
     this.loadDeliveredList();
+  }
+
+  saveToFile(): void {
+    if (this.deliveredList.length === 0) {
+      this.displayMessage('No items to save!', 'error');
+      return;
+    }
+  
+    const sortedList = this.deliveredList
+      .map(box => box.BoxGUID)
+      .sort((a, b) => {
+        const [categoryA, numberA] = extractCategoryAndNumber(a);
+        const [categoryB, numberB] = extractCategoryAndNumber(b);
+  
+        if (categoryA < categoryB) return -1;
+        if (categoryA > categoryB) return 1;
+        return numberA - numberB;
+      });
+  
+    const data = sortedList.join('\n');
+    const blob = new Blob([data], { type: 'text/plain' });
+  
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+    const fileName = `deiveryList-${formattedDate}.txt`;
+  
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = fileName;
+    anchor.click();
+    window.URL.revokeObjectURL(url);
+  
+    this.displayMessage('File saved successfully!', 'success');
   }
 
   setFocus() {

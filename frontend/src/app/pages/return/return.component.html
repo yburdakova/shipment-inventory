@@ -1,7 +1,15 @@
 <div class="container">
     <div class="general-info">
       <div class="bold">Ready to Return: <span id="ready-number">{{ readyList.length || 0 }}</span></div>
-      <div class="bold">Selected for Return: <span id="returning-number">{{ returnedList.length > 0 ? returnedList.length : 0 }}</span></div>
+      <div class="save-btn-box">
+        <div class="bold">Selected for Return: 
+            <span id="returning-number">{{ returnedList.length > 0 ? returnedList.length : 0 }}</span>
+        </div>
+        <button (click)="saveToFile()" class="save-button" [disabled]="returnedList.length === 0">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M840-680v480q0 33-23.5 56.5T760-120H200q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h480l160 160Zm-80 34L646-760H200v560h560v-446ZM480-240q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35ZM240-560h360v-160H240v160Zm-40-86v446-560 114Z"/></svg>
+        </button>
+      </div>
+     
       
       <div class="icon-box">
         <div class="note-block" *ngIf="statusMessage">
@@ -16,7 +24,7 @@
           </div>
         </div>
   
-        <p class="icon-label">Scan Box Barcode</p>
+        <p class="icon-label">Scan Box Barcode</p> 
         <div class="scan-icon-box">
           <img src="assets/icons/qr_code_scanner.svg" alt="QR-scanner Icon">
         </div>

@@ -34,6 +34,40 @@
     text-align: center;
 }
 
+.save-btn-box{
+    display: flex;
+    align-items: center;
+}
+
+.save-button {
+    margin-left: 10px;
+    padding: 0;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  
+    &:hover {
+      cursor: pointer;
+  
+      svg path {
+        fill: var(--primary-color);
+      }
+    }
+
+    :disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+  
+    svg {
+      width: 32px;
+      height: 32px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  
+
 .highlighted{
     background-color: var(--accent-color);
     color: white;
