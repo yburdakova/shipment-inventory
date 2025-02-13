@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ReturnedService } from '../../services/returned.service';
+import { extractCategoryAndNumber } from '../../shared/utils/box-utils';
 
 @Component({
   selector: 'app-return',
@@ -28,6 +29,7 @@ export class ReturnComponent implements AfterViewInit {
   constructor(private returnedService: ReturnedService) {}
 
   @HostListener('document:click', ['$event'])
+
   closeContextMenu(event: MouseEvent) {
     if (!event.target || !(event.target as HTMLElement).closest('.context-menu')) {
       this.contextMenuVisible = false;
@@ -49,6 +51,40 @@ export class ReturnComponent implements AfterViewInit {
     }
   }
 
+  saveToFile(): void {
+    if (this.returnedList.length === 0) {
+      this.displayMessage('No items to save!', 'error');
+      return;
+    }
+  
+    const sortedList = this.returnedList
+      .map(box => box.BoxGUID)
+      .sort((a, b) => {
+        const [categoryA, numberA] = extractCategoryAndNumber(a);
+        const [categoryB, numberB] = extractCategoryAndNumber(b);
+  
+        if (categoryA < categoryB) return -1;
+        if (categoryA > categoryB) return 1;
+        return numberA - numberB;
+      });
+  
+    const data = sortedList.join('\n');
+    const blob = new Blob([data], { type: 'text/plain' });
+  
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+    const fileName = `returnedList-${formattedDate}.txt`;
+  
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = fileName;
+    anchor.click();
+    window.URL.revokeObjectURL(url);
+  
+    this.displayMessage('File saved successfully!', 'success');
+  }
+  
   private loadReturnedList() {
     const savedData = localStorage.getItem(this.STORAGE_KEY);
     if (savedData) {
