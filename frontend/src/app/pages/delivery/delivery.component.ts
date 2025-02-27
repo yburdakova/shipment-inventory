@@ -182,6 +182,21 @@ export class DeliveryComponent implements AfterViewInit {
     });
   }
 
+  selectBox(box: any): void {
+    const alreadySelected = this.deliveredList.some(item => item.BoxGUID === box.BoxGUID);
+
+    if (!alreadySelected) {
+        this.deliveredList.push(box);
+        this.saveDeliveredList();
+        this.displayMessage("Box selected!", "success");
+        console.log("Updated deliveredList:", this.deliveredList);
+    } else {
+        this.displayMessage("Box already selected!", "error");
+    }
+
+    this.contextMenuVisible = false;
+  }
+
   openContextMenu(event: MouseEvent, box: any) {
     event.preventDefault();
     this.selectedBox = box;

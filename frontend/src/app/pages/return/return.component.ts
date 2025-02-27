@@ -142,7 +142,7 @@ export class ReturnComponent implements AfterViewInit {
 
   isReturned(barcode: string): boolean {
     return this.returnedList.some(item => item.BoxGUID === barcode);
-  }
+}
 
   makeReturn(): void {
     if (this.returnedList.length === 0) {
@@ -181,6 +181,21 @@ export class ReturnComponent implements AfterViewInit {
         console.error("Error refreshing ready list:", error);
       }
     });
+  }
+  
+  selectBox(box: any): void {
+    const alreadySelected = this.returnedList.some(item => item.BoxGUID === box.BoxGUID);
+
+    if (!alreadySelected) {
+        this.returnedList.push(box);
+        this.saveReturnedList();
+        this.displayMessage("Box selected!", "success");
+        console.log("Updated returnedList:", this.returnedList);
+    } else {
+        this.displayMessage("Box already selected!", "error");
+    }
+
+    this.contextMenuVisible = false;
   }
 
   openContextMenu(event: MouseEvent, box: any) {
