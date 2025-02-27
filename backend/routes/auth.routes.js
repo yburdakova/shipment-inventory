@@ -1,9 +1,6 @@
 import express from 'express';
 import pool from '../db.config.js';
-import dotenv from 'dotenv';
 
-dotenv.config();
-const dbname = process.env.DB_NAME;
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -15,7 +12,7 @@ router.post('/login', async (req, res) => {
 
     try {
         const [rows] = await pool.query(
-            `SELECT * FROM ${dbname} WHERE AuthCode = ?`,
+            `SELECT * FROM tblccsinventoryuser WHERE AuthCode = ?`,
             [authCode]
         );
 
