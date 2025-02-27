@@ -52,24 +52,24 @@
             {{ isProcessing ? 'Processing...' : 'Make Delivery' }}
           </button>
     </div>
+
     <div class="box-container">
       <div class="box" 
            *ngFor="let item of boxedList"
            [ngClass]="{'highlighted': isDelivered(item.BoxGUID)}"
-           (contextmenu)="isDelivered(item.BoxGUID) ? openContextMenu($event, item) : null"
-           (touchstart)="isDelivered(item.BoxGUID) ? startLongPress($event, item) : null"
+           (contextmenu)="openContextMenu($event, item)"
+           (touchstart)="startLongPress($event, item)"
            (touchend)="cancelLongPress()">
           <div class="barcode">{{ item.BoxGUID.split('.')[0] }}</div>
       </div>
+    </div>
+
+  <div *ngIf="contextMenuVisible" class="context-menu" [style.top.px]="contextMenuY" [style.left.px]="contextMenuX">
+    <button *ngIf="!isDelivered(selectedBox?.BoxGUID)" (click)="selectBox(selectedBox)">Select</button>
+    <button *ngIf="isDelivered(selectedBox?.BoxGUID)" (click)="removeFromDelivered(selectedBox)">Remove box</button>
+    <button *ngIf="isDelivered(selectedBox?.BoxGUID)" (click)="clearDeliveredList()">Clear all</button>
   </div>
   
-  <div *ngIf="contextMenuVisible" 
-     class="context-menu" 
-     [style.top.px]="contextMenuY" 
-     [style.left.px]="contextMenuX">
-    <button (click)="removeFromDelivered(selectedBox)">Remove box</button>
-    <button (click)="clearDeliveredList()">Clear all</button>
-</div>
 </div>
 
 

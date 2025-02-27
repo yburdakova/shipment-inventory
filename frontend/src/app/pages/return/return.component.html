@@ -56,16 +56,18 @@
       <div class="box" 
            *ngFor="let item of readyList"
            [ngClass]="{'highlighted': isReturned(item.BoxGUID)}"
-           (contextmenu)="isReturned(item.BoxGUID) ? openContextMenu($event, item) : null"
-           (touchstart)="isReturned(item.BoxGUID) ? startLongPress($event, item) : null"
+           (contextmenu)="openContextMenu($event, item)"
+           (touchstart)="startLongPress($event, item)"
            (touchend)="cancelLongPress()">
-        <div class="barcode">{{ item.BoxGUID.split('.')[0] }}</div>
+          <div class="barcode">{{ item.BoxGUID.split('.')[0] }}</div>
       </div>
     </div>
-    
+  
     <div *ngIf="contextMenuVisible" class="context-menu" [style.top.px]="contextMenuY" [style.left.px]="contextMenuX">
-      <button (click)="removeFromReturned(selectedBox)">Remove box</button>
-      <button (click)="clearReturnedList()">Clear all</button>
+      <button *ngIf="!isReturned(selectedBox?.BoxGUID)" (click)="selectBox(selectedBox)">Select</button>
+      <button *ngIf="isReturned(selectedBox?.BoxGUID)" (click)="removeFromReturned(selectedBox)">Remove box</button>
+      <button *ngIf="isReturned(selectedBox?.BoxGUID)" (click)="clearReturnedList()">Clear all</button>
     </div>
+  
   </div>
   
