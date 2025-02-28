@@ -1,3 +1,11 @@
+interface BoxDetails {
+  BoxGUID: string;
+  CaseType: string;
+  StatusID: number;
+  StartFileNumber: number | null;
+  EndFileNumber: number | null;
+}
+
 export interface ProjectStats {
     total: number;
     statuses: {
@@ -23,6 +31,7 @@ export interface ProjectStats {
     reviewed_pages: number;
     deliveries: {
       RegisterDate: string;
+      boxes: BoxDetails[];
       total_rows: number;
       first_box: string;
       last_box: string;

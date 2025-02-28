@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { ProjectStats } from '../../models/stats.model';
 import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
+import { extractCategoryAndNumber } from '../../shared/utils/box-utils';
 
 @Component({
   selector: 'app-project-details',
@@ -60,20 +61,43 @@ export class ProjectDetailsComponent implements OnInit {
     const date = new Date(dateString);
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   }
-
-  formatBoxRange(firstBox: string, lastBox: string): string {
-    const firstMatch = firstBox.match(/^([A-Z]+)-(\d+)/);
-    const lastMatch = lastBox.match(/^([A-Z]+)-(\d+)/);
   
-    if (firstMatch && lastMatch) {
-      const caseType = firstMatch[1];
-      const firstNumber = firstMatch[2];
-      const lastNumber = lastMatch[2];
-  
-      return `${caseType}: ${firstNumber}-${lastNumber}`;
+  generateBoxRange(boxList: { BoxGUID: string; CaseType: string }[]): string {
+    if (!boxList || boxList.length === 0) {
+        return "";
     }
-  
-    return `${firstBox} - ${lastBox}`;
-  }
-  
+
+    const groupedBoxes: { [key: string]: number[] } = {};
+
+    for (const box of boxList) {
+        const match = box.BoxGUID.match(/([A-Z]+)-(\d+)\./);
+        if (!match) continue;
+
+        const caseType = box.CaseType;
+        const boxNumber = parseInt(match[2], 10);
+
+        if (!groupedBoxes[caseType]) {
+            groupedBoxes[caseType] = [];
+        }
+        groupedBoxes[caseType].push(boxNumber);
+    }
+
+    const rangeStrings: string[] = [];
+
+    for (const caseType in groupedBoxes) {
+        if (groupedBoxes.hasOwnProperty(caseType)) {
+            const sortedNumbers = [...new Set(groupedBoxes[caseType])].sort((a, b) => a - b);
+            const firstNumber = sortedNumbers[0];
+            const lastNumber = sortedNumbers[sortedNumbers.length - 1];
+
+            rangeStrings.push(`${caseType}:${firstNumber}-${lastNumber}`);
+        }
+    }
+
+    return rangeStrings.join(", ");
+}
+
+
+
+
 }

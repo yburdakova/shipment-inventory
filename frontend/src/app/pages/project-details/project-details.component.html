@@ -37,7 +37,7 @@
     <ng-container *ngFor="let delivery of deliveries">
       <div class="grid-item">{{ formatDate(delivery.RegisterDate) }}</div>
       <div class="grid-item">{{ delivery.total_rows }}</div>
-      <div class="grid-item">{{ formatBoxRange(delivery.first_box, delivery.last_box) }}</div>
+      <div class="grid-item">{{ generateBoxRange(delivery.boxes) }}</div>
       <div class="grid-item">
         <app-progress-chart 
           [untouched]="delivery.untouched"

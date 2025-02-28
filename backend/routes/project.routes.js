@@ -17,7 +17,7 @@ router.get(`/`, async (req, res) => {
     }
 });
 
-export default router;
+
 
 router.get(`/stats/:projectId`, async (req, res) => {
     const { projectId } = req.params;
@@ -43,8 +43,7 @@ router.get(`/stats/:projectId`, async (req, res) => {
             returned,
             avgPages,
             scanned_pages,
-            reviewed_pages,
-            deliveries
+            reviewed_pages
         ] = await Promise.all([
             pool.query(`SELECT COUNT(*) AS total FROM ${dbname}.tblbox WHERE ProjectID = ?`, [projectId]),
             pool.query(`SELECT COUNT(*) AS total FROM ${dbname}.tblbox WHERE ProjectID = ? AND StatusID = 1`, [projectId]),
@@ -65,10 +64,36 @@ router.get(`/stats/:projectId`, async (req, res) => {
             pool.query(`SELECT COUNT(*) AS total FROM ${dbname}.tblbox WHERE ProjectID = ? AND StatusID = 16`, [projectId]),
             pool.query(`SELECT AVG(NumberOfPages) AS avg_pages FROM ${dbname}.tblbox WHERE ProjectID = ? AND NumberOfPages > 0`, [projectId]),
             pool.query(`SELECT SUM(NumberOfPages) AS scanned_pages FROM ${dbname}.tblbox WHERE ProjectID = ? AND StatusID IN (7, 8, 9, 10, 11, 12, 13, 16)`, [projectId]),
-            pool.query(`SELECT SUM(NumberOfPages) AS reviewed_pages FROM ${dbname}.tblbox WHERE ProjectID = ? AND StatusID IN (11, 12, 13, 16)`, [projectId]),
-            pool.query(`CALL Get_ShipmentInventory(?)`, [projectId])
-           
+            pool.query(`SELECT SUM(NumberOfPages) AS reviewed_pages FROM ${dbname}.tblbox WHERE ProjectID = ? AND StatusID IN (11, 12, 13, 16)`, [projectId])   
         ]);
+
+        const [deliveryResults] = await pool.query(`CALL Get_ShipmentInventory(?)`, [projectId]);
+
+        const newdeliveries = deliveryResults[0] || []; 
+
+        const processedDeliveries = newdeliveries.map(delivery => {
+
+            let parsedBoxList;
+            try {
+                parsedBoxList = typeof delivery.box_list === "string" 
+                    ? JSON.parse(delivery.box_list) 
+                    : delivery.box_list;
+            } catch (error) {
+                console.error("Error parsing box_list:", error);
+                parsedBoxList = [];
+            }
+
+            return {
+                RegisterDate: delivery.RegisterDate,
+                total_rows: delivery.total_rows,
+                boxes: parsedBoxList,
+                untouched: delivery.untouched,
+                ip: delivery.ip,
+                scanned: delivery.scanned,
+                reviewed: delivery.reviewed,
+                returned: delivery.returned
+            };
+        });
 
         res.json({
             total: totalBoxes[0][0]?.total || 0,
@@ -93,7 +118,7 @@ router.get(`/stats/:projectId`, async (req, res) => {
             average_pages: avgPages[0][0]?.avg_pages || 0,
             scanned_pages: scanned_pages[0][0]?.scanned_pages || 0,
             reviewed_pages: reviewed_pages[0][0]?.reviewed_pages || 0,
-            deliveries: deliveries[0][0] || []
+            deliveries: processedDeliveries
         });
 
     } catch (error) {
@@ -101,3 +126,5 @@ router.get(`/stats/:projectId`, async (req, res) => {
         res.status(500).json({ error: `Internal server error` });
     }
 });
+
+export default router;
