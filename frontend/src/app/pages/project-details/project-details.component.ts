@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { ProjectStats } from '../../models/stats.model';
 import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
@@ -9,7 +9,7 @@ import { extractCategoryAndNumber } from '../../shared/utils/box-utils';
 @Component({
   selector: 'app-project-details',
   templateUrl: './project-details.component.html',
-  imports: [CommonModule, ProgressChartComponent],
+  imports: [CommonModule, RouterModule, ProgressChartComponent],
   styleUrls: ['./project-details.component.scss']
 })
 export class ProjectDetailsComponent implements OnInit {
@@ -59,7 +59,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
   }
   
   generateBoxRange(boxList: { BoxGUID: string; CaseType: string }[]): string {
@@ -90,14 +90,11 @@ export class ProjectDetailsComponent implements OnInit {
             const firstNumber = sortedNumbers[0];
             const lastNumber = sortedNumbers[sortedNumbers.length - 1];
 
-            rangeStrings.push(`${caseType}:${firstNumber}-${lastNumber}`);
+            rangeStrings.push(`${caseType}: ${firstNumber}-${lastNumber}`);
         }
     }
 
-    return rangeStrings.join(", ");
+    return rangeStrings.join(",\n");
 }
-
-
-
 
 }

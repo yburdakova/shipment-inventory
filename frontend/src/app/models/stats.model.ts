@@ -1,7 +1,8 @@
-interface BoxDetails {
+export interface BoxDetails {
   BoxGUID: string;
   CaseType: string;
   StatusID: number;
+  StatusLabel: string;
   StartFileNumber: number | null;
   EndFileNumber: number | null;
 }

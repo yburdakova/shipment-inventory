@@ -1,0 +1,20 @@
+<h2>Delivery Details for {{ deliveryDate }}</h2>
+
+<table class="delivery-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>BoxGUID</th>
+      <th>Range</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let box of boxes; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ box.BoxGUID }}</td>
+      <td>{{ box.StartFileNumber }} - {{box.EndFileNumber}}</td>
+      <td>{{ box.StatusLabel }}</td>
+    </tr>
+  </tbody>
+</table>
