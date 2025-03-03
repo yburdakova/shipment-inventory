@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ProjectDetailsComponent } from './pages/project-details/project-details.component';
 import { DeliveryComponent } from './pages/delivery/delivery.component';
 import { ReturnComponent } from './pages/return/return.component';
+import { DeliveryDetailsComponent } from './pages/delivery-details/delivery-details.component';
 
 export const routes: Routes = [
   { path: '', component: AuthComponent },
@@ -19,7 +20,14 @@ export const routes: Routes = [
         component: DashboardComponent,
         children: [
           { path: '', redirectTo: 'favorite', pathMatch: 'full' },
-          { path: 'project/:id', component: ProjectDetailsComponent }
+          {
+            path: 'project/:id',
+            component: ProjectDetailsComponent,
+          },
+          {
+            path: 'project/:id/:deliveryDate',
+            component: DeliveryDetailsComponent
+          }
         ]
       },
       { path: 'delivery', component: DeliveryComponent },
