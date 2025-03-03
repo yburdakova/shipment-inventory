@@ -4,7 +4,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { ProjectStats } from '../../models/stats.model';
 import { ProgressChartComponent } from '../progress-chart/progress-chart.component';
-import { extractCategoryAndNumber } from '../../shared/utils/box-utils';
 
 @Component({
   selector: 'app-project-details',

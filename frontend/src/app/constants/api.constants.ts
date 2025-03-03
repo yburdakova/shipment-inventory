@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'http://localhost:4000/api';
+export const API_BASE_URL = `${window.location.protocol}//192.168.1.57:4000/api`;
