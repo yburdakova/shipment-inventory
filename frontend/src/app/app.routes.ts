@@ -20,8 +20,7 @@ export const routes: Routes = [
         component: DashboardComponent,
         children: [
           { path: '', redirectTo: 'favorite', pathMatch: 'full' },
-          { path: 'project/:id', component: ProjectDetailsComponent },
-          { path: 'project/:id/:deliveryDate', component: DeliveryDetailsComponent}
+          { path: 'project/:id', component: ProjectDetailsComponent }
         ]
       },
       { path: 'delivery', component: DeliveryComponent },
