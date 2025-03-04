@@ -16,13 +16,6 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const dbname = process.env.DB_NAME;
 
-
-const sslOptions = {
-    key: fs.readFileSync('./server.key'),
-    cert: fs.readFileSync('./server.cert')
-};
-
-
 app.use(cors());
 app.use(express.json());
 
