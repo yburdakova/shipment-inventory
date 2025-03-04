@@ -26,17 +26,19 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
     this.loggedInUser = this.userService.getUser();
     if (!this.loggedInUser) {
       this.router.navigate(['/']);
       return;
     }
 
+    // Загружаем проекты
     this.projectListService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
         console.log('Projects loaded:', this.projects);
+
+        // Проверяем, есть ли сохраненный избранный проект
         const savedFavoriteProjectId = localStorage.getItem('favoriteProjectId');
         if (savedFavoriteProjectId) {
           this.favoriteProjectId = parseInt(savedFavoriteProjectId, 10);
@@ -50,15 +52,7 @@ export class DashboardComponent implements OnInit {
         console.log('Project loading completed.');
       }
     });
-
-
-  const savedFavoriteProjectId = localStorage.getItem('favoriteProjectId');
-  if (savedFavoriteProjectId) {
-    this.favoriteProjectId = parseInt(savedFavoriteProjectId, 10);
-    this.selectProjectById(this.favoriteProjectId);
   }
-}
-
 
   selectProject(project: { ID: number; Description: string }): void {
     this.projectService.setProject(project);
@@ -66,12 +60,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/project', project.ID]);
   }
 
-
   setFavoriteProject(projectId: number): void {
     this.favoriteProjectId = projectId;
     localStorage.setItem('favoriteProjectId', projectId.toString());
   }
-
 
   private selectProjectById(projectId: number): void {
     const project = this.projects.find(p => p.ID === projectId);
@@ -80,10 +72,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
   logout(): void {
     this.userService.clearUser();
-    localStorage.removeItem('defaultProjectId');
+    localStorage.removeItem('favoriteProjectId');
     this.router.navigate(['/']);
   }
 }
