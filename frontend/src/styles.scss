@@ -10,7 +10,6 @@
   --primary-color: #4292f3;
 }
 
-
 body{
   background: var(--background-color);
   color: var(--font-color);
@@ -18,8 +17,9 @@ body{
   display: flex;
   justify-content: center;
   scroll-behavior: smooth;
-
+  height: 100vh;
 }
+
 .btn{
   display: inline-block;
   margin-top: 2rem;

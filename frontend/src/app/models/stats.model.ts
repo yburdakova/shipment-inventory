@@ -32,7 +32,7 @@ export interface ProjectStats {
     reviewed_pages: number;
     deliveries: {
       RegisterDate: string;
-      box_list: BoxDetails[];
+      boxes: BoxDetails[];
       total_rows: number;
       first_box: string;
       last_box: string;

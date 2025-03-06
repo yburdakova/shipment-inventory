@@ -1,9 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import https from 'https';
-import fs from 'fs';
-
 
 import authRoutes from './routes/auth.routes.js';
 import projectRoutes from './routes/project.routes.js';
@@ -25,8 +22,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/boxed', boxedRoutes);
 app.use('/api/returns', returnRoutes);
 
-
-https.createServer(sslOptions, app).listen(PORT, () => {
-    console.log(`Server is running on HTTPS: https://192.168.1.57:${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Local Server is running on port:${PORT}`);
     console.log(`Server is connecting to db ${dbname}`);
 });
