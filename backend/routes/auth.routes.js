@@ -1,10 +1,8 @@
 import express from 'express';
 import pool from '../db.config.js';
-import dotenv from 'dotenv';
 
 dotenv.config();
 console.log('DB_NAME from env:', process.env.DB_NAME);
-const dbname = process.env.DB_NAME;
 const router = express.Router();
 
 console.log('Auth route loaded');

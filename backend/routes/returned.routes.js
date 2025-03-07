@@ -1,16 +1,13 @@
 import express from 'express';
 import pool from '../db.config.js';
-import dotenv from 'dotenv';
 
-dotenv.config();
-const dbname = process.env.DB_NAME;
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
         const [rows] = await pool.query(`
             SELECT ID, BoxGUID 
-            FROM ${dbname}.tblbox 
+            FROM tblbox 
             WHERE StatusID IN (11, 12, 13);
         `);
 
@@ -36,7 +33,7 @@ router.post('/update-status', async (req, res) => {
 
         for (const box of returnedList) {
             const [updateResult] = await connection.query(
-                `UPDATE ${dbname}.tblbox SET StatusID = 16 WHERE ID = ? AND StatusID IN (11, 12, 13);`,
+                `UPDATE tblbox SET StatusID = 16 WHERE ID = ? AND StatusID IN (11, 12, 13);`,
                 [box.ID]
             );
 

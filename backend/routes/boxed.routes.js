@@ -1,14 +1,11 @@
 import express from 'express';
 import pool from '../db.config.js';
-import dotenv from 'dotenv';
 
-dotenv.config();
-const dbname = process.env.DB_NAME;
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const [rows] = await pool.query(`SELECT ID, BoxGUID FROM ${dbname}.tblbox WHERE StatusID = 1;`);
+        const [rows] = await pool.query(`SELECT ID, BoxGUID FROM tblbox WHERE StatusID = 1;`);
 
         res.json(rows);
     } catch (error) {
@@ -33,7 +30,7 @@ router.post('/update-status', async (req, res) => {
         
         for (const box of deliveredList) {
             const [updateResult] = await connection.query(
-                `UPDATE ${dbname}.tblbox 
+                `UPDATE tblbox 
                  SET StatusID = 2, DateRegistered = NOW() 
                  WHERE ID = ? AND StatusID = 1;`,
                 [box.ID]
