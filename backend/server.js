@@ -23,8 +23,8 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/boxed', boxedRoutes);
 app.use('/api/returns', returnRoutes);
 
-const keyPath = 'C:/SSL/server.key';
-const certPath = 'C:/SSL/server.cert';
+const keyPath = 'C:/Projects/SSL/server.key';
+const certPath = 'C:/Projects/SSL/server.cert';
 
 const sslOptions = {
     key: fs.readFileSync(keyPath),
