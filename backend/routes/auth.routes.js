@@ -17,9 +17,10 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        const query = `SELECT * FROM ${dbname}.tblccsinventoryuser WHERE AuthCode = ?`;
+        const query = `SELECT * FROM tblccsinventoryuser WHERE AuthCode = ?`;
         console.log('Executing query:', query);
         const [rows] = await pool.query(query, [authCode]);
+
 
         if (rows.length === 0) {
             return res.status(401).json({ error: 'User not found' });
