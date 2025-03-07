@@ -23,7 +23,6 @@ app.use('/api/boxed', boxedRoutes);
 app.use('/api/returns', returnRoutes);
 
 app.listen(PORT, () => {
-    console.log(`No SSL certificate found! Running server on HTTP.`);
-    console.log(`Server is running on HTTP: https://evieapi.courthousecomputersystems.com:${PORT}`);
+    console.log(`Local Server is running on port:${PORT}`);
     console.log(`Server is connecting to db ${dbname}`);
 });
