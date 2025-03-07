@@ -6,6 +6,8 @@ dotenv.config();
 const dbname = process.env.DB_NAME;
 const router = express.Router();
 
+console.log('Auth route loaded');
+
 router.post('/login', async (req, res) => {
     const { authCode } = req.body;
 
