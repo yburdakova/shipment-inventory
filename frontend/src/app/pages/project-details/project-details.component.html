@@ -35,11 +35,14 @@
     <div class="grid-header">Progress</div>
   
     <ng-container *ngFor="let delivery of deliveries">
-      <a [routerLink]="['/dashboard/project', project?.ID, formatDate(delivery.RegisterDate)]" 
-      [state]="{ boxes: delivery.boxes
- }">
-        {{ formatDate(delivery.RegisterDate) }}
-      </a>
+      <div class="grid-item">
+        <a 
+          [routerLink]="['/dashboard/project', project?.ID, formatDate(delivery.RegisterDate)]" 
+          [state]="{ boxes: delivery.boxes}">
+            {{ formatDate(delivery.RegisterDate) }}
+        </a>
+      </div>
+      
       <div class="grid-item">{{ delivery.total_rows }}</div>
       <div class="grid-item">{{ generateBoxRange(delivery.boxes) }}</div>
       <div class="grid-item">
