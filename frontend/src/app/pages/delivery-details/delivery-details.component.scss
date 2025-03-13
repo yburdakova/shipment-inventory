@@ -1,22 +1,77 @@
-.delivery-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .delivery-table th,
-  .delivery-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .delivery-table th {
-    background-color: #f4f4f4;
-  }
+.deliveries-grid {
+  display: grid;
+  grid-template-columns: 0.5fr 1.2fr 1fr 1.5fr 2fr; /* 5 колонок */
+  gap: 0.2rem;
+  align-items: center;
+  text-align: center;
+}
 
-  .copy-icon{
-    cursor: pointer;
-    margin-left: 20px;
-    align-items: center;
-  }
-  
+.grid-header {
+  font-weight: bold;
+  background-color: #d0e1f6;
+  border: 1px solid #ddd;
+  padding: 0.4rem;
+  border-radius: 5px;
+}
+
+.grid-item {
+  padding: 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+.copy-icon{
+  cursor: pointer;
+  margin-left: 20px;
+  align-items: center;
+}
+
+.filter-container {
+  display: grid;
+  grid-template-columns: repeat( 8, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-switch .slider {
+  width: 34px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 20px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+  background: #1e72be;
+}
+
+.toggle-switch .slider::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + .slider::before {
+  transform: translateX(14px);
+}
+
