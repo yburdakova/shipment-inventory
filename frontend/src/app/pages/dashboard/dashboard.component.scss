@@ -14,7 +14,7 @@ h3{
   margin: 0;
 }
 
-.project-list{
+.main-menu{
   margin-top: 0.6rem;
   width: 320px;
   display: flex;
@@ -46,7 +46,7 @@ li{
  fill: rgb(233, 204, 40) !important; 
 }
 
-svg {
+ul svg {
   width: 42px;
   height: 42px;
   stroke: rgb(0, 0, 0);
@@ -54,5 +54,34 @@ svg {
   cursor: pointer;
   :hover {
     fill: rgb(233, 204, 40);
+  }
+}
+
+.search-tool{
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.search-tool svg{
+  fill: #8797A0;
+  width: 28px;
+  height: 28px;
+}
+
+.search-tool-label{
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #8797A0;
+}
+
+.st-active{
+  svg{
+    fill: #155883;
+  }
+  .search-tool-label{
+    color: #155883;
   }
 }

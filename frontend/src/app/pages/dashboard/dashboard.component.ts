@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ProjectService } from '../../services/project.service';
 import { ProjectListService } from '../../services/project-list.service';
+import { BoxService } from '../../services/box.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,15 +14,19 @@ import { ProjectListService } from '../../services/project-list.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('quickSearchInput') quickSearchInput!: ElementRef<HTMLInputElement>;
+  
   loggedInUser: { firstName: string; lastName: string } | null = null; 
   projects: any[] = [];
   selectedProjectId: number | null = null;
   favoriteProjectId: number | null = null;
+  isQuickSearchActive: boolean = false;
 
   constructor(
     private userService: UserService,
     private projectListService: ProjectListService,
     private projectService: ProjectService,
+    private boxService: BoxService,
     private router: Router
   ) {}
 
@@ -32,13 +37,11 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    // Загружаем проекты
     this.projectListService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
         console.log('Projects loaded:', this.projects);
 
-        // Проверяем, есть ли сохраненный избранный проект
         const savedFavoriteProjectId = localStorage.getItem('favoriteProjectId');
         if (savedFavoriteProjectId) {
           this.favoriteProjectId = parseInt(savedFavoriteProjectId, 10);
@@ -77,4 +80,47 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem('favoriteProjectId');
     this.router.navigate(['/']);
   }
+
+  activateQuickSearch(): void {
+    this.isQuickSearchActive = true;
+    setTimeout(() => {
+      this.quickSearchInput.nativeElement.focus();
+    });
+  }
+
+  deactivateQuickSearch(): void {
+    this.isQuickSearchActive = false;
+  }
+
+  @HostListener('keyup.enter', ['$event'])
+  handleQuickSearch(event: KeyboardEvent): void {
+    const barcode = this.quickSearchInput.nativeElement.value.trim();
+    console.log('Quick search barcode:', barcode);
+    if (barcode) {
+      this.fetchBoxDetails(barcode);
+    }
+  }
+
+  fetchBoxDetails(barcode: string): void {
+    this.boxService.getBoxIdByBarcode(barcode).subscribe({
+      next: (response) => {
+        if (response && response.ID) {
+          this.router.navigate([`/dashboard/box/${response.ID}`]);
+        } else {
+          alert('Box not found.');
+        }
+        this.quickSearchInput.nativeElement.value = '';
+        this.quickSearchInput.nativeElement.blur();
+        this.isQuickSearchActive = false;
+      },
+      error: (error) => {
+        console.error('Error fetching box details:', error);
+        alert('Error fetching box details.');
+        this.quickSearchInput.nativeElement.value = '';
+        this.quickSearchInput.nativeElement.blur();
+        this.isQuickSearchActive = false;
+      }
+    });
+  }
+  
 }

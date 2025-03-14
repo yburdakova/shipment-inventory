@@ -7,6 +7,7 @@ import { ProjectDetailsComponent } from './pages/project-details/project-details
 import { DeliveryComponent } from './pages/delivery/delivery.component';
 import { ReturnComponent } from './pages/return/return.component';
 import { DeliveryDetailsComponent } from './pages/delivery-details/delivery-details.component';
+import { BoxDetailsComponent } from './pages/box-details/box-details.component';
 
 export const routes: Routes = [
   { path: '', component: AuthComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
         children: [
           { path: '', redirectTo: 'favorite', pathMatch: 'full' },
           { path: 'project/:id', component: ProjectDetailsComponent },
+          { path: 'box/:id', component: BoxDetailsComponent },
           { path: 'project/:id/:deliveryDate', component: DeliveryDetailsComponent}
         ]
       },
