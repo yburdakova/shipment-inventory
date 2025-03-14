@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -20,9 +21,9 @@ export class DeliveryDetailsComponent implements OnInit {
   statusFilters: StatusFilters = {
     "No Filters": { active: true, statuses: [] },
     "Delivered": { active: false, statuses: [1, 2] },
-    "Scanned": { active: false, statuses: [9, 10, 11, 12, 13, 16] },
+    "Scanned": { active: false, statuses: [ 9] },
     "Reviewed": { active: false, statuses: [11] },
-    "In progress": { active: false, statuses: [3, 4, 5, 6, 7, 8, 10] },
+    "In progress": { active: false, statuses: [4, 5, 6, 7, 8, 10] },
     "Uploaded": { active: false, statuses: [13] },
     "Destroyed": { active: false, statuses: [14] },
     "Returned": { active: false, statuses: [15, 16] }
