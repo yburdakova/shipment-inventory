@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../constants/api.constants';
+import { BoxDetails } from '../models/box.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class BoxService {
     return this.http.get<{ ID: number }>(`${this.apiUrl}/${barcode}`);
   }
 
-  getBoxDetailsById(id: number): Observable<{ ID: number, BoxGUID: string }> {
-    return this.http.get<{ ID: number, BoxGUID: string }>(`${this.apiUrl}/id/${id}`);
+  getBoxDetailsById(id: number): Observable<BoxDetails> {
+    return this.http.get<BoxDetails>(`${this.apiUrl}/id/${id}`);
   }
 }

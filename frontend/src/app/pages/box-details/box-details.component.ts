@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BoxService } from '../../services/box.service';
 import { CommonModule } from '@angular/common';
+import { BoxDetails } from '../../models/box.model';
 
 @Component({
   selector: 'app-box-details',
@@ -11,7 +12,9 @@ import { CommonModule } from '@angular/common';
 })
 export class BoxDetailsComponent implements OnInit {
   boxId!: number;
-  boxGUID!: string;
+  boxBarcode: string = 'Loading...'; 
+  boxData: BoxDetails | null = null; 
+  sortAscending: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,12 +28,26 @@ export class BoxDetailsComponent implements OnInit {
 
   loadBoxDetails(): void {
     this.boxService.getBoxDetailsById(this.boxId).subscribe({
-      next: (response) => {
-        this.boxGUID = response.BoxGUID;
+      next: (response: BoxDetails) => {
+        this.boxBarcode = response.Barcode;
+        this.boxData = response;
       },
       error: (error) => {
-        console.error('Failed to load box details:', error);
+        console.error('Error loading box details:', error);
       }
     });
+  }
+
+  get sortedHistory() {
+    if (!this.boxData?.History) return [];
+    return [...this.boxData.History].sort((a, b) =>
+      this.sortAscending
+        ? new Date(a.ActivityStarted).getTime() - new Date(b.ActivityStarted).getTime()
+        : new Date(b.ActivityStarted).getTime() - new Date(a.ActivityStarted).getTime()
+    );
+  }
+
+  toggleSortOrder(): void {
+    this.sortAscending = !this.sortAscending;
   }
 }

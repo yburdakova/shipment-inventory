@@ -1,7 +1,44 @@
 <div class="box-details-container">
     <div class="box-details-title"> 
-        <span *ngIf="boxGUID">Box: {{ boxGUID }}</span>
-        <span *ngIf="!boxGUID">Loading...</span>
+      <span *ngIf="boxBarcode">Box: {{ boxBarcode }}</span>
+      <span *ngIf="!boxBarcode">Loading...</span>
     </div>       
+  
+    <ng-container *ngIf="boxData; else loadingTemplate">
+      <p><strong>Current status:</strong> {{ boxData.CurrentStatus }}</p>
+      <p><strong>Folder Range:</strong> {{ boxData.StartFileNumber }} - {{boxData.EndFileNumber}}</p>
+      <p><strong>Missing Files:</strong> {{ boxData.MissingFiles || 'None' }}</p>
+      <p><strong>Pages:</strong> {{ boxData.NumberOfPages }}</p>
+  
+      <div class="history-section">
+        <h3>Box History</h3>
+        <div class="grid-header">
+          <span (click)="toggleSortOrder()" class="sortable">
+            Action
+            <svg *ngIf="sortAscending" width="16" height="16" viewBox="0 0 300 224" xmlns="http://www.w3.org/2000/svg">
+                <path d="M102.273 224C73.8636 224 49.7159 213.792 29.8295 193.375C9.94318 172.958 0 148.167 0 119C0 89.8333 9.94318 65.0417 29.8295 44.625C49.7159 24.2083 73.8636 14 102.273 14C114.091 14 125.227 15.925 135.682 19.775C146.136 23.625 155.682 28.9333 164.318 35.7L172.188 42.7119L178.659 49.3559L183.409 55.3C190 64.1667 195.17 74.025 198.92 84.875C202.67 95.725 204.545 107.1 204.545 119C204.545 148.167 194.602 172.958 174.716 193.375C154.83 213.792 130.682 224 102.273 224ZM252.273 224L204.545 175L223.636 155.4L238.636 170.8V0H265.909V170.45L280.568 155.4L300 175L252.273 224ZM102.273 196C123.182 196 140.909 188.533 155.455 173.6C170 158.667 177.273 140.467 177.273 119C177.273 97.5333 170 79.3333 155.455 64.4C140.909 49.4667 123.182 42 102.273 42C81.3636 42 63.6364 49.4667 49.0909 64.4C34.5455 79.3333 27.2727 97.5333 27.2727 119C27.2727 140.467 34.5455 158.667 49.0909 173.6C63.6364 188.533 81.3636 196 102.273 196ZM88.6364 133H115.909V63H88.6364V133Z" fill="#3692CF"/>
+            </svg>
+            <svg *ngIf="!sortAscending" width="16" height="16" viewBox="0 0 300 219" xmlns="http://www.w3.org/2000/svg">
+                <path d="M102.273 219C73.8637 219 49.7159 209.019 29.8296 189.058C9.94317 169.098 0 144.86 0 116.344C0 87.828 9.94317 63.5898 29.8296 43.6288C49.7159 23.668 73.8637 13.6875 102.273 13.6875C114.091 13.6875 125.227 15.5695 135.681 19.3336C146.137 23.0976 155.682 28.2874 164.319 34.9031L171.75 40.8894L176.927 46.0872L183.409 54.0656C190 62.7343 195.17 72.3727 198.921 82.9804C202.67 93.5885 204.545 104.709 204.545 116.344C204.545 144.86 194.602 169.098 174.716 189.058C154.83 209.019 130.682 219 102.273 219ZM238.636 219V52.0125L223.636 67.0687L204.545 47.9062L252.273 0L300 47.9062L280.568 67.0687L265.909 52.3546V219H238.636ZM102.273 191.625C123.182 191.625 140.909 184.325 155.455 169.725C170 155.125 177.273 137.331 177.273 116.344C177.273 95.3566 170 77.5624 155.455 62.9625C140.909 48.3625 123.182 41.0625 102.273 41.0625C81.3637 41.0625 63.6364 48.3625 49.0909 62.9625C34.5455 77.5624 27.2727 95.3566 27.2727 116.344C27.2727 137.331 34.5455 155.125 49.0909 169.725C63.6364 184.325 81.3637 191.625 102.273 191.625ZM88.6364 130.031H115.909V61.5937H88.6364V130.031Z" fill="#3692CF"/>
+            </svg>
+        </span>
+          <span>Date</span>
+          <span>Time</span>
+          <span>Processed By</span>
+        </div>
+        <div class="grid-body">
+          <div class="grid-row" *ngFor="let entry of sortedHistory">
+            <span>{{ entry.Action }}</span>
+            <span>{{ entry.ActivityStarted | date: 'MM/dd/yyyy' }}</span>
+            <span>{{ entry.ActivityStarted | date: 'HH:mm' }}</span>
+            <span>{{ entry.ProcessedBy }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #loadingTemplate>
+      <p>Loading box details...</p>
+    </ng-template>
   </div>
   

@@ -2,3 +2,49 @@
   font-size: 1.5rem;
   font-weight: 600;
 }
+
+.history-section {
+    margin-top: 20px;
+  }
+  
+  .grid-header, .grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    gap: 10px;
+    padding: 12px 10px;
+  }
+  
+  .grid-header {
+    background: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .grid-body {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .grid-row {
+    background: #fff;
+    transition: background 0.2s ease-in-out;
+  }
+  
+  .grid-row:nth-child(even) {
+    background: #f9f9f9;
+  }
+  
+  .grid-row:hover {
+    background: #eaeaea;
+  }
+
+  .sortable{
+    display: flex;
+    gap:10px;
+  }
+  .sortable svg{
+    cursor: pointer;
+    fill: #8797A0;
+    width: 24px;
+    height: 24px;
+  }
