@@ -22,13 +22,20 @@ export class BoxDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.boxId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadBoxDetails();
+    this.route.paramMap.subscribe(params => {
+      this.boxId = Number(params.get('id'));
+      this.loadBoxDetails();
+    });
   }
+  
 
   loadBoxDetails(): void {
+    this.boxData = null;
+    this.boxBarcode = 'Loading...';
+  
     this.boxService.getBoxDetailsById(this.boxId).subscribe({
       next: (response: BoxDetails) => {
+        console.log('Full Box Data:', response);
         this.boxBarcode = response.Barcode;
         this.boxData = response;
       },
@@ -37,6 +44,7 @@ export class BoxDetailsComponent implements OnInit {
       }
     });
   }
+  
 
   get sortedHistory() {
     if (!this.boxData?.History) return [];
