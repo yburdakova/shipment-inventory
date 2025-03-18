@@ -32,7 +32,7 @@ export class GreetingsComponent implements OnInit {
 
   private updateToolName(url: string): void {
     if (url.includes('/dashboard')) {
-      this.toolName = 'Dashboard Tool';
+      this.toolName = 'Dashboard';
     } else if (url.includes('/delivery')) {
       this.toolName = 'Delivery Tool';
     } else if (url.includes('/return')) {

@@ -92,6 +92,14 @@ export class DashboardComponent implements OnInit {
     this.isQuickSearchActive = false;
   }
 
+  toggleQuickSearch(): void {
+    if (this.isQuickSearchActive) {
+      this.deactivateQuickSearch();
+    } else {
+      this.activateQuickSearch();
+    }
+  }
+
   @HostListener('keyup.enter', ['$event'])
   handleQuickSearch(event: KeyboardEvent): void {
     const barcode = this.quickSearchInput.nativeElement.value.trim();
