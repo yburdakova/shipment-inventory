@@ -14,7 +14,25 @@ router.get(`/`, async (req, res) => {
     }
 });
 
+router.get(`/:projectId`, async (req, res) => {
+    const { projectId } = req.params;
+    
+    try {
+        const [rows] = await pool.query(
+            `SELECT ID, Description FROM tblccsinventoryproject WHERE ID = ?`, 
+            [projectId]
+        );
 
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+
+        res.json(rows[0]);
+    } catch (error) {
+        console.error(`Database error:`, error);
+        res.status(500).json({ error: `Internal server error` });
+    }
+});
 
 router.get(`/stats/:projectId`, async (req, res) => {
     const { projectId } = req.params;

@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   selectedProjectId: number | null = null;
   favoriteProjectId: number | null = null;
   isQuickSearchActive: boolean = false;
+  isDashboardPage: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -31,11 +32,16 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     this.loggedInUser = this.userService.getUser();
     if (!this.loggedInUser) {
       this.router.navigate(['/']);
       return;
     }
+
+    this.router.events.subscribe(() => {
+      this.isDashboardPage = this.router.url === '/dashboard';
+    });
 
     this.projectListService.getProjects().subscribe({
       next: (data) => {
@@ -56,7 +62,7 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-
+  
   selectProject(project: { ID: number; Description: string }): void {
     this.projectService.setProject(project);
     this.selectedProjectId = project.ID;

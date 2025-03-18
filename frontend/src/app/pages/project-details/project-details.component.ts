@@ -15,43 +15,47 @@ export class ProjectDetailsComponent implements OnInit {
   project: { ID: number; Description: string } | null = null;
   stats: ProjectStats | null = null;
   deliveries: ProjectStats["deliveries"] = [];
+
   constructor(private route: ActivatedRoute, private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() => {
-      this.loadProject();
+    this.route.paramMap.subscribe((params) => {
+      const projectId = Number(params.get('id'));
+
+      if (isNaN(projectId)) {
+        console.error('Invalid project ID');
+        return;
+      }
+
+      this.loadProject(projectId);
     });
   }
 
-  private loadProject(): void {
-    this.project = this.projectService.getProject();
-
-    if (!this.project || this.project.ID === undefined) {
-      console.error('Project is not selected.');
-      return;
-    }
-
-    this.fetchProjectStats(this.project.ID);
+  private loadProject(projectId: number): void {
+    this.projectService.getProjectById(projectId).subscribe({
+      next: (data) => {
+        this.project = data;
+        this.projectService.setProject(data);
+        this.fetchProjectStats(data.ID);
+      },
+      error: (error) => {
+        console.error('Error loading project from API:', error);
+      }
+    });
   }
 
   private fetchProjectStats(projectId: number): void {
     this.projectService.getProjectStats(projectId).subscribe({
       next: (data) => {
-        console.log('Received stats:', data);
         this.stats = { ...data };
         this.deliveries = JSON.parse(JSON.stringify(data.deliveries)).sort(
-          (a:any, b:any) => new Date(b.RegisterDate).getTime() - new Date(a.RegisterDate).getTime()
-        );;
+          (a: any, b: any) => new Date(b.RegisterDate).getTime() - new Date(a.RegisterDate).getTime()
+        );
 
-      console.log('Updated deliveries:', this.deliveries);
-
-      setTimeout(() => this.deliveries = [...this.deliveries], 0);
+        setTimeout(() => this.deliveries = [...this.deliveries], 0);
       },
       error: (error) => {
         console.error('Error loading project stats:', error);
-      },
-      complete: () => {
-        console.log('Project stats loading completed.');
       }
     });
   }
@@ -94,6 +98,6 @@ export class ProjectDetailsComponent implements OnInit {
     }
 
     return rangeStrings.join(",\n");
-}
+  }
 
 }

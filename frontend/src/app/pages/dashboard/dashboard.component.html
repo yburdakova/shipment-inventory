@@ -36,5 +36,8 @@
   </div>
   
   <div class="project-details">
-    <router-outlet></router-outlet>
+    <div *ngIf="isDashboardPage" class="no-project-message">
+      Select a project
+    </div>
+    <router-outlet *ngIf="!isDashboardPage"></router-outlet>
   </div>

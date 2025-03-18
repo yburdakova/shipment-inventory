@@ -19,6 +19,10 @@ export class ProjectService {
     return this.selectedProject;
   }
 
+  getProjectById(projectId: number): Observable<{ ID: number; Description: string }> {
+    return this.http.get<{ ID: number; Description: string }>(`${API_BASE_URL}/projects/${projectId}`);
+  }
+
   getProjectStats(projectId: number): Observable<any> {
     console.log('ProjectService (getProjectStats): Project ID:', projectId);
     if (!projectId) {
