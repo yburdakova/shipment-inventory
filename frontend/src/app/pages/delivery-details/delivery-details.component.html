@@ -25,7 +25,12 @@
 
   <ng-container *ngFor="let box of filteredBoxes; let i = index">
     <div class="grid-item">{{ i + 1 }}</div>
-    <div class="grid-item">{{ box.BoxGUID }}</div>
+    <div class="grid-item">
+      <a class="box-link">
+        {{ box.BoxGUID }}
+      </a>
+      
+    </div>
     <div class="grid-item">{{ box.StartFileNumber }} - {{box.EndFileNumber}}</div>
     <div class="grid-item">{{ box.StatusLabel }}</div>
     <div class="grid-item"></div>

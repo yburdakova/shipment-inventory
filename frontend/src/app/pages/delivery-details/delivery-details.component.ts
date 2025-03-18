@@ -35,13 +35,10 @@ export class DeliveryDetailsComponent implements OnInit {
     this.projectId = this.route.snapshot.paramMap.get('id') || '';
     this.deliveryDate = this.route.snapshot.paramMap.get('deliveryDate') || '';
 
-    console.log('Project ID:', this.projectId);
-    console.log('Delivery Date:', this.deliveryDate);
 
     if (history.state && history.state.boxes) {
       this.boxes = history.state.boxes;
       this.filteredBoxes = [...this.boxes];
-      console.log('Received boxes:', this.boxes);
     } else {
       console.warn('No boxes data found in history.state');
     }

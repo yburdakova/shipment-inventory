@@ -74,3 +74,15 @@
 .toggle-switch input:checked + .slider::before {
   transform: translateX(14px);
 }
+
+.box-link {
+  color: #155883;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.box-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}

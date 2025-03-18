@@ -43,3 +43,15 @@ h2{
     color: #777;
     margin-top: 20px;
   }
+
+  .box-link {
+    color: #155883;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .box-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+  }

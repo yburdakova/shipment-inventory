@@ -1,4 +1,5 @@
 export interface BoxDetails {
+    ID: number;
     Barcode: string;
     CurrentStatus: string;
     StartFileNumber: number;

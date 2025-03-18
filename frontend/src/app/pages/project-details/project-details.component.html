@@ -38,8 +38,10 @@
       <div class="grid-item">
         <a 
           [routerLink]="['/dashboard/project', project?.ID, formatDate(delivery.RegisterDate)]" 
-          [state]="{ boxes: delivery.boxes}">
-            {{ formatDate(delivery.RegisterDate) }}
+          [state]="{ boxes: delivery.boxes}"
+          class="box-link"
+        >
+          {{ formatDate(delivery.RegisterDate) }}
         </a>
       </div>
       

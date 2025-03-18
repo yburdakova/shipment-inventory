@@ -1,4 +1,5 @@
 export interface BoxDetails {
+  ID: number;
   BoxGUID: string;
   CaseType: string;
   StatusID: number;
