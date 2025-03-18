@@ -26,7 +26,10 @@
   <ng-container *ngFor="let box of filteredBoxes; let i = index">
     <div class="grid-item">{{ i + 1 }}</div>
     <div class="grid-item">
-      <a class="box-link">
+      <a 
+        class="box-link"
+        [routerLink]="['/dashboard/box', box.ID]"
+      >
         {{ box.BoxGUID }}
       </a>
       

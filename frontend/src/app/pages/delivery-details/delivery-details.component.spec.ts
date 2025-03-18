@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StatusFilters } from '../../models/delivery.model';
 import { BoxDetails } from '../../models/stats.model';
@@ -8,7 +8,7 @@ import { BoxDetails } from '../../models/stats.model';
   selector: 'app-delivery-details',
   templateUrl: './delivery-details.component.html',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   styleUrls: ['./delivery-details.component.scss']
 })
 export class DeliveryDetailsComponent implements OnInit {
