@@ -1,0 +1,36 @@
+.select-box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.file-input{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 18px;
+}
+.note-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+    margin-top: 12px;
+  
+    &.success {
+      background-color: #eaf9ea;
+      color: #24C520;
+    }
+  
+    &.error {
+      background-color: #faeaea;
+      color: #EA1515;
+    }
+  
+    svg {
+      flex-shrink: 0;
+    }
+  }

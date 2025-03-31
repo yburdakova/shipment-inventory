@@ -14,17 +14,31 @@ router.post('/mark-converted', async (req, res) => {
     const connection = await pool.getConnection();
     await connection.beginTransaction();
 
-    const placeholders = caseNumbers.map(() => '?').join(',');
-    const query = `UPDATE tblcases SET Uploaded = 1 WHERE CaseNumber IN (${placeholders});`;
+    const selectPlaceholders = caseNumbers.map(() => '?').join(',');
+    const [existingRows] = await connection.query(
+      `SELECT CaseNumber FROM tblcases WHERE CaseNumber IN (${selectPlaceholders})`,
+      caseNumbers
+    );
+    const existingCases = existingRows.map(row => row.CaseNumber);
+    const missingCases = caseNumbers.filter(cn => !existingCases.includes(cn));
 
-    const [result] = await connection.query(query, caseNumbers);
+    let updatedRows = 0;
+    if (existingCases.length > 0) {
+      const updatePlaceholders = existingCases.map(() => '?').join(',');
+      const [updateResult] = await connection.query(
+        `UPDATE tblcases SET Converted = 1 WHERE CaseNumber IN (${updatePlaceholders})`,
+        existingCases
+      );
+      updatedRows = updateResult.affectedRows;
+    }
 
     await connection.commit();
     connection.release();
 
     res.json({
       success: true,
-      updatedRows: result.affectedRows
+      updatedRows,
+      missingCases
     });
   } catch (error) {
     console.error('Error updating cases:', error);
