@@ -31,6 +31,11 @@ export class DashboardComponent implements OnInit {
     private router: Router
   ) {}
 
+  goToConversionTool() {
+    console.log('Navigating to conversion tool...');
+    this.router.navigate(['/dashboard/conversion-tool']);
+  }
+
   ngOnInit(): void {
 
     this.loggedInUser = this.userService.getUser();

@@ -12,6 +12,8 @@ ul, li{
 }
 h3{
   margin: 0;
+  margin-top: 20px;
+
 }
 
 .main-menu{
@@ -57,21 +59,21 @@ ul svg {
   }
 }
 
-.search-tool{
+.tool-box{
   display: flex;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   gap: 20px;
   cursor: pointer;
 }
 
-.search-tool svg{
+.tool-box svg{
   fill: #8797A0;
   width: 28px;
   height: 28px;
 }
 
-.search-tool-label{
+.tool-box-label{
   font-size: 1.2rem;
   font-weight: 600;
   color: #8797A0;
@@ -81,7 +83,7 @@ ul svg {
   svg{
     fill: #155883;
   }
-  .search-tool-label{
+  .tool-box-label{
     color: #155883;
   }
 }

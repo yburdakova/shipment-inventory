@@ -8,6 +8,7 @@ import { DeliveryComponent } from './pages/delivery/delivery.component';
 import { ReturnComponent } from './pages/return/return.component';
 import { BoxDetailsComponent } from './pages/box-details/box-details.component';
 import { DeliveryDetailsComponent } from './pages/delivery-details/delivery-details.component';
+import { ConversionToolComponent } from './pages/conversion-tool/conversion-tool.component';
 
 export const routes: Routes = [
   { path: '', component: AuthComponent },
@@ -22,11 +23,13 @@ export const routes: Routes = [
         children: [
           { path: 'project/:id', component: ProjectDetailsComponent },
           { path: 'box/:id', component: BoxDetailsComponent },
-          { path: 'project/:id/:deliveryDate', component: DeliveryDetailsComponent}
+          { path: 'project/:id/:deliveryDate', component: DeliveryDetailsComponent},
+          { path: 'conversion-tool', component: ConversionToolComponent  }
         ]
       },
       { path: 'delivery', component: DeliveryComponent },
-      { path: 'return', component: ReturnComponent }
+      { path: 'return', component: ReturnComponent },
+     
     ]
   },
   { path: '**', redirectTo: '' }
