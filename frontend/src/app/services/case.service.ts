@@ -11,7 +11,10 @@ export class CaseService {
 
   constructor(private http: HttpClient) {}
 
-  markCasesAsConverted(caseNumbers: string[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/mark-converted`, { caseNumbers });
+  markCasesAsConverted(caseNumbers: string[], userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/mark-converted`, {
+      caseNumbers,
+      userId
+    });
   }
 }

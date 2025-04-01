@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CaseService } from '../../services/case.service';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-conversion-tool',
@@ -16,7 +17,10 @@ export class ConversionToolComponent {
   statusMessage: string = '';
   statusType: 'success' | 'error' | '' = '';
 
-  constructor(private caseService: CaseService) {}
+  constructor(
+    private caseService: CaseService,
+    private userService: UserService
+  ) {}
 
   onFolderSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -39,8 +43,18 @@ export class ConversionToolComponent {
       this.clearStatusAfterDelay();
       return;
     }
+
+    const user = this.userService.getUser();
+  if (!user) {
+    this.statusType = 'error';
+    this.statusMessage = 'User not found in storage.';
+    this.clearStatusAfterDelay();
+    return;
+  }
+
+  const userId = user.id;
   
-    this.caseService.markCasesAsConverted(this.convertedCaseNumbers).subscribe({
+    this.caseService.markCasesAsConverted(this.convertedCaseNumbers, userId).subscribe({
       next: (res) => {
         console.log('Upload status updated:', res);
         this.missingCases = res.missingCases || [];

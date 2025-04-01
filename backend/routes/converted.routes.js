@@ -4,11 +4,12 @@ import pool from '../db.config.js';
 const router = express.Router();
 
 router.post('/mark-converted', async (req, res) => {
-  const { caseNumbers } = req.body;
+  const { caseNumbers, userId } = req.body;
 
-  if (!Array.isArray(caseNumbers) || caseNumbers.length === 0) {
-    return res.status(400).json({ error: 'Invalid request: caseNumbers must be a non-empty array' });
+  if (!Array.isArray(caseNumbers) || caseNumbers.length === 0 || typeof userId !== 'number') {
+    return res.status(400).json({ error: 'Invalid request: caseNumbers and userId are required' });
   }
+  
 
   try {
     const connection = await pool.getConnection();
@@ -26,8 +27,8 @@ router.post('/mark-converted', async (req, res) => {
     if (existingCases.length > 0) {
       const updatePlaceholders = existingCases.map(() => '?').join(',');
       const [updateResult] = await connection.query(
-        `UPDATE tblcases SET Converted = 1 WHERE CaseNumber IN (${updatePlaceholders})`,
-        existingCases
+        `UPDATE tblcases SET Converted = 1, UserID = ? WHERE CaseNumber IN (${updatePlaceholders})`,
+        [userId, ...existingCases]
       );
       updatedRows = updateResult.affectedRows;
     }

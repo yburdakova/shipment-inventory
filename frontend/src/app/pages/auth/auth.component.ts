@@ -44,6 +44,7 @@ export class AuthComponent implements AfterViewInit {
   authenticateUser(authCode: string) {
     this.http.post<any>(this.apiUrl, { authCode }).subscribe({
       next: (response) => {
+        console.log('✅ RESPONSE FROM SERVER:', response);
         this.userService.setUser(response);
         this.router.navigate(['/dashboard']);
       },

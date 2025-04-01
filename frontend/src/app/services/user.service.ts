@@ -10,7 +10,7 @@ export class UserService {
     localStorage.setItem(this.storageKey, JSON.stringify(user));
   }
 
-  getUser(): { firstName: string; lastName: string } | null {
+  getUser(): { firstName: string; lastName: string, id: number } | null {
     const userData = localStorage.getItem(this.storageKey);
     return userData ? JSON.parse(userData) : null;
   }
