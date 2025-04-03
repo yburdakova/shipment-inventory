@@ -31,7 +31,7 @@ router.post('/update-status', async (req, res) => {
         for (const box of deliveredList) {
             const [updateResult] = await connection.query(
                 `UPDATE tblbox 
-                 SET StatusID = 2, DateRegistered = NOW() 
+                 SET StatusID = 2, DateDelivered = NOW() 
                  WHERE ID = ? AND StatusID = 1;`,
                 [box.ID]
             );
