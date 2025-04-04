@@ -23,7 +23,7 @@ export class DeliveryDetailsComponent implements OnInit {
     "Scanned": { active: false, statuses: [ 9] },
     "Reviewed": { active: false, statuses: [11] },
     "In progress": { active: false, statuses: [4, 5, 6, 7, 8, 10] },
-    "Uploaded": { active: false, statuses: [13] },
+    "Uploaded": { active: false, statuses: [] },
     "Destroyed": { active: false, statuses: [14] },
     "Returned": { active: false, statuses: [15, 16] }
   };
@@ -71,13 +71,19 @@ export class DeliveryDetailsComponent implements OnInit {
       this.filteredBoxes = [...this.boxes];
       return;
     }
-
-    const activeStatuses = Object.values(this.statusFilters)
-      .filter(filter => filter.active)
-      .flatMap(filter => filter.statuses);
-
-    this.filteredBoxes = this.boxes.filter(box => activeStatuses.includes(box.StatusID));
+  
+    const activeStatuses = Object.entries(this.statusFilters)
+      .filter(([name, filter]) => name !== "Uploaded" && filter.active)
+      .flatMap(([_, filter]) => filter.statuses);
+  
+    const uploadedActive = this.statusFilters["Uploaded"].active;
+  
+    this.filteredBoxes = this.boxes.filter(box =>
+      (uploadedActive && box.Uploaded === 1) ||
+      activeStatuses.includes(box.StatusID)
+    );
   }
+  
 
   copyTableToClipboard(): void {
     if (!this.filteredBoxes || this.filteredBoxes.length === 0) {

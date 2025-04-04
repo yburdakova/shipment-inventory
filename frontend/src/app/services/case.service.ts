@@ -17,4 +17,10 @@ export class CaseService {
       userId
     });
   }
+
+  checkExistingCases(cases: string[]) {
+    return this.http.post<{ existing: string[] }>(`${this.apiUrl}/check-existing`, { caseNumbers: cases });
+  }
+  
+  
 }

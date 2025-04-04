@@ -15,6 +15,8 @@ export class ProgressChartComponent {
   @Input() reviewed: number = 0;
   @Input() returned: number = 0;
   @Input() total_rows: number = 1;
+  @Input() uploaded: number = 0;
+
 
   getSegments() {
     return [

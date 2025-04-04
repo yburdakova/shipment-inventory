@@ -106,7 +106,8 @@ router.get(`/stats/:projectId`, async (req, res) => {
                 ip: delivery.ip,
                 scanned: delivery.scanned,
                 reviewed: delivery.reviewed,
-                returned: delivery.returned
+                returned: delivery.returned,
+                uploaded: delivery.uploaded
             };
         });
 

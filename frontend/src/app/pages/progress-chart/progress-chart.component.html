@@ -1,4 +1,5 @@
-<div class="progress-bar">
+<div class="progress-wrapper">
+  <div class="progress-bar">
     <div *ngFor="let segment of getSegments()"
          class="progress-segment {{ segment.class }}"
          [style.width.%]="getPercentage(segment.value)"
@@ -6,5 +7,13 @@
       {{ segment.value }}
     </div>
   </div>
-  
-  
+
+  <div class="uploaded-bar" *ngIf="uploaded > 0">
+    <div 
+      class="uploaded-fill" 
+      [style.width.%]="getPercentage(uploaded)"
+      data-label="Uploaded">
+      {{ uploaded }}
+    </div>
+  </div>
+</div>

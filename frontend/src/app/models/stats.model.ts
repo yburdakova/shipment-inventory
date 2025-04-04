@@ -6,6 +6,7 @@ export interface BoxDetails {
   StatusLabel: string;
   StartFileNumber: number | null;
   EndFileNumber: number | null;
+  Uploaded: number;
 }
 
 export interface ProjectStats {
@@ -42,6 +43,7 @@ export interface ProjectStats {
       scanned: number;
       reviewed: number;
       returned: number;
+      uploaded: number;
     }[];
   }
   

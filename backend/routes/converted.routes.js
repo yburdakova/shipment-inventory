@@ -9,28 +9,57 @@ router.post('/mark-converted', async (req, res) => {
   if (!Array.isArray(caseNumbers) || caseNumbers.length === 0 || typeof userId !== 'number') {
     return res.status(400).json({ error: 'Invalid request: caseNumbers and userId are required' });
   }
-  
 
   try {
     const connection = await pool.getConnection();
     await connection.beginTransaction();
 
-    const selectPlaceholders = caseNumbers.map(() => '?').join(',');
-    const [existingRows] = await connection.query(
-      `SELECT CaseNumber FROM tblcases WHERE CaseNumber IN (${selectPlaceholders})`,
-      caseNumbers
+    const [allCasesRows] = await connection.query(
+      `SELECT CaseNumber, Converted FROM tblcases`
     );
-    const existingCases = existingRows.map(row => row.CaseNumber);
-    const missingCases = caseNumbers.filter(cn => !existingCases.includes(cn));
+
+    const allCaseMap = new Map();
+    allCasesRows.forEach(row => {
+      allCaseMap.set(row.CaseNumber, row.Converted);
+    });
+
+    const normalizedToOriginalMap = new Map();
+    allCasesRows.forEach(row => {
+      normalizedToOriginalMap.set(row.CaseNumber.replace(/-/g, ''), row.CaseNumber);
+    });
+
+    const toUpdate = [];
+    const alreadyConverted = [];
+    const notFound = [];
+    const similarFound = [];
+
+    for (const raw of caseNumbers) {
+      const normalized = raw.replace(/-/g, '');
+
+      if (allCaseMap.has(raw)) {
+        const isAlready = allCaseMap.get(raw) === 1;
+        if (isAlready) {
+          alreadyConverted.push(raw);
+        } else {
+          toUpdate.push(raw);
+        }
+      } else if (normalizedToOriginalMap.has(normalized)) {
+        const match = normalizedToOriginalMap.get(normalized);
+        const isAlready = allCaseMap.get(match) === 1;
+        similarFound.push({ original: raw, match, converted: isAlready });
+      } else {
+        notFound.push(raw);
+      }
+    }
 
     let updatedRows = 0;
-    if (existingCases.length > 0) {
-      const updatePlaceholders = existingCases.map(() => '?').join(',');
-      const [updateResult] = await connection.query(
-        `UPDATE tblcases SET Converted = 1, UserID = ? WHERE CaseNumber IN (${updatePlaceholders})`,
-        [userId, ...existingCases]
+    if (toUpdate.length > 0) {
+      const placeholders = toUpdate.map(() => '?').join(',');
+      const [result] = await connection.query(
+        `UPDATE tblcases SET Converted = 1, UserID = ? WHERE CaseNumber IN (${placeholders})`,
+        [userId, ...toUpdate]
       );
-      updatedRows = updateResult.affectedRows;
+      updatedRows = result.affectedRows;
     }
 
     await connection.commit();
@@ -39,10 +68,34 @@ router.post('/mark-converted', async (req, res) => {
     res.json({
       success: true,
       updatedRows,
-      missingCases
+      toUpdate,
+      alreadyConverted,
+      notFound,
+      similarFound
     });
   } catch (error) {
     console.error('Error updating cases:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.post('/check-existing', async (req, res) => {
+  const { caseNumbers } = req.body;
+
+  if (!Array.isArray(caseNumbers) || caseNumbers.length === 0) {
+    return res.status(400).json({ error: 'caseNumbers must be a non-empty array' });
+  }
+
+  try {
+    const placeholders = caseNumbers.map(() => '?').join(',');
+    const [rows] = await pool.query(
+      `SELECT CaseNumber FROM tblcases WHERE CaseNumber IN (${placeholders})`,
+      caseNumbers
+    );
+    const existing = rows.map(r => r.CaseNumber);
+    res.json({ existing });
+  } catch (error) {
+    console.error('Error checking existing cases:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

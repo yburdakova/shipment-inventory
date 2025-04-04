@@ -9,11 +9,13 @@ import { UserService } from '../../services/user.service';
   imports: [CommonModule],
   templateUrl: './conversion-tool.component.html',
   styleUrls: ['./conversion-tool.component.scss'],
-  providers: [],
 })
 export class ConversionToolComponent {
   convertedCaseNumbers: string[] = [];
-  missingCases: string[] = [];
+  converted: string[] = [];
+  alreadyConverted: string[] = [];
+  notFound: string[] = [];
+  similarFound: { original: string, match: string }[] = [];
   statusMessage: string = '';
   statusType: 'success' | 'error' | '' = '';
 
@@ -24,16 +26,12 @@ export class ConversionToolComponent {
 
   onFolderSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-
     if (!input.files) return;
 
     const files = Array.from(input.files);
     this.convertedCaseNumbers = files
       .filter(file => file.name.toLowerCase().endsWith('.pdf'))
-      .filter(file => !file.name.toUpperCase().includes('-C'))
       .map(file => file.name.replace(/\.pdf$/i, ''));
-
-    console.log('✅ Filtered file names:', this.convertedCaseNumbers);
   }
 
   markAsConverted(): void {
@@ -45,44 +43,64 @@ export class ConversionToolComponent {
     }
 
     const user = this.userService.getUser();
-  if (!user) {
-    this.statusType = 'error';
-    this.statusMessage = 'User not found in storage.';
-    this.clearStatusAfterDelay();
-    return;
-  }
+    if (!user) {
+      this.statusType = 'error';
+      this.statusMessage = 'User not found in storage.';
+      this.clearStatusAfterDelay();
+      return;
+    }
 
-  const userId = user.id;
-  
+    const userId = user.id;
+
     this.caseService.markCasesAsConverted(this.convertedCaseNumbers, userId).subscribe({
       next: (res) => {
-        console.log('Upload status updated:', res);
-        this.missingCases = res.missingCases || [];
-  
-        if (this.missingCases.length === 0) {
-          this.statusType = 'success';
-          this.statusMessage = 'Upload status successfully updated!';
-        } else {
-          this.statusType = 'success';
-          this.statusMessage = 'Some cases updated. Missing cases listed below.';
-        }
-  
+        this.converted = res.toUpdate || [];
+        this.alreadyConverted = res.alreadyConverted || [];
+        this.notFound = res.notFound || [];
+        this.similarFound = res.similarFound || [];
+
+        const nothingUpdated = !this.converted.length && !this.alreadyConverted.length && !this.similarFound.length;
+
+        this.statusType = nothingUpdated ? 'error' : '';
+        this.statusMessage = nothingUpdated ? 'No cases were updated.' : '';
         this.clearStatusAfterDelay();
       },
-      error: (err) => {
-        console.error('Error updating status:', err);
+      error: () => {
         this.statusType = 'error';
         this.statusMessage = 'Failed to update upload status.';
         this.clearStatusAfterDelay();
       }
     });
   }
-  
+
+  updateSimilarCase(caseNumber: string): void {
+    const user = this.userService.getUser();
+    if (!user) return;
+
+    const userId = user.id;
+
+    this.caseService.markCasesAsConverted([caseNumber], userId).subscribe({
+      next: () => {
+        this.similarFound = this.similarFound.filter(pair => pair.match !== caseNumber);
+        if (!this.converted.includes(caseNumber)) this.converted.push(caseNumber);
+      }
+    });
+  }
+
+  downloadList(data: string[], filename: string): void {
+    const blob = new Blob([data.join('\n')], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   private clearStatusAfterDelay(): void {
     setTimeout(() => {
       this.statusMessage = '';
       this.statusType = '';
-    }, 5000);
+    }, 4000);
   }
-  
 }

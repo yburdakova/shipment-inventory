@@ -15,8 +15,8 @@ h2{
   .deliveries-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 2fr;
-    gap: 0.2rem;
     align-items: center;
+    gap: 0.2rem;
     text-align: center;
   }
   
@@ -30,7 +30,7 @@ h2{
   
   .grid-item {
     padding: 0.4rem;
-
+    height: auto;
     border: 1px solid #ddd;
     border-radius: 5px;
 
