@@ -7,6 +7,7 @@ import { BoxDetails } from '../../models/stats.model';
 
 @Component({
   selector: 'app-delivery-details',
+  standalone: true,
   templateUrl: './delivery-details.component.html',
   imports: [CommonModule, RouterModule],
   styleUrls: ['./delivery-details.component.scss']
@@ -16,6 +17,7 @@ export class DeliveryDetailsComponent implements OnInit {
   deliveryDate!: string;
   boxes: BoxDetails[] = [];
   filteredBoxes: BoxDetails[] = [];
+  sortDirection: 'asc' | 'desc' | '' = '';
 
   statusFilters: StatusFilters = {
     "No Filters": { active: true, statuses: [] },
@@ -84,7 +86,33 @@ export class DeliveryDetailsComponent implements OnInit {
     );
   }
   
-
+  sortByBoxGUID(): void  {
+    if (this.sortDirection === '') {
+      this.sortDirection = 'asc';
+    } else if (this.sortDirection === 'asc') {
+      this.sortDirection = 'desc';
+    } else {
+      this.sortDirection = '';
+    }
+  
+    if (this.sortDirection === '') {
+      this.applyFilters();
+      return;
+    }
+  
+    const extractSortKey = (guid: string): number => {
+      const match = guid.match(/-(\d+)\./);
+      return match ? parseInt(match[1], 10) : 0;
+    };
+  
+    this.filteredBoxes.sort((a, b) => {
+      const aKey = extractSortKey(a.BoxGUID);
+      const bKey = extractSortKey(b.BoxGUID);
+  
+      return this.sortDirection === 'asc' ? aKey - bKey : bKey - aKey;
+    });
+  }
+  
   copyTableToClipboard(): void {
     if (!this.filteredBoxes || this.filteredBoxes.length === 0) {
       console.warn("No data to copy.");

@@ -90,3 +90,22 @@
 .filter-info{
   height: 40px;
 }
+
+.sortable {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-icon {
+  font-size: 12px;
+}
+.sort-icon span {
+  transition: opacity 0.2s;
+}
+
+.sortable:hover .sort-icon span {
+  opacity: 1 !important;
+}

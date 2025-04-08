@@ -16,6 +16,8 @@ export class DeliveryDetailsComponent implements OnInit {
   deliveryDate!: string;
   boxes: BoxDetails[] = [];
   filteredBoxes: BoxDetails[] = [];
+  sortDirection: 'asc' | 'desc' | '' = '';
+
 
   statusFilters: StatusFilters = {
     "No Filters": { active: true, statuses: [] },
@@ -48,6 +50,21 @@ export class DeliveryDetailsComponent implements OnInit {
 
   getStatusFilterKeys(): string[] {
     return Object.keys(this.statusFilters);
+  }
+
+ sortByBoxGUID(): void {
+    if (this.sortDirection === '') {
+      this.sortDirection = 'asc';
+    } else if (this.sortDirection === 'asc') {
+      this.sortDirection = 'desc';
+    } else {
+      this.sortDirection = '';
+    }
+  
+    if (this.sortDirection === '') {
+      this.applyFilters();
+      return;
+    }
   }
 
   toggleFilter(filterName: string): void {

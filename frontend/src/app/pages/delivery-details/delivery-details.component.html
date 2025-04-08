@@ -21,7 +21,16 @@
 <div class="deliveries-grid">
 
   <div class="grid-header">#</div>
-  <div class="grid-header">BoxGUID</div>
+  <div class="grid-header sortable" (click)="sortByBoxGUID()">
+    BoxGUID
+    <span class="sort-icon">
+      <ng-container [ngSwitch]="sortDirection">
+        <span *ngSwitchCase="'asc'">&#9650;</span>
+        <span *ngSwitchCase="'desc'">&#9660;</span> 
+        <span *ngSwitchDefault style="opacity: 0.3;">&#9651;</span> 
+      </ng-container>
+    </span>
+  </div>
   <div class="grid-header">Range</div>
   <div class="grid-header">Status</div>
   <div class="grid-header">Lifecycle</div>
