@@ -1,3 +1,5 @@
+@use '../../shared/shared-styles.scss';
+
 .deliveries-grid {
   display: grid;
   grid-template-columns: 0.5fr 1.2fr 1fr 1.5fr 2fr; /* 5 колонок */

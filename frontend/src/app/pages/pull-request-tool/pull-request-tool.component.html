@@ -1,0 +1,78 @@
+<h2 class="page-title">Pull Request Search</h2>
+
+<div class="case-container">
+
+  <div class="filter-container">
+    <label *ngFor="let type of caseTypes" class="toggle-switch">
+      <input
+        type="checkbox"
+        [checked]="selectedType === type.Abbreviation"
+        (change)="selectType(type.Abbreviation)"
+      />
+      <span class="slider"></span>
+      {{ type.Abbreviation }}
+    </label>
+  </div>
+
+  <div class="searching">
+    <div class="search-input-wrapper">
+      <input
+        #caseInput
+        type="text"
+        placeholder="Enter case number..."
+        [(ngModel)]="searchTerm"
+        class="case-input"
+        (input)="onInputChange()"
+      />
+
+      <button (click)="manualSearch()" 
+        [disabled]="!canSearch()" 
+        class="search-button" 
+        title="Search in tblcases">
+        🔍
+      </button>
+    </div>
+
+    <ul *ngIf="suggestions.length > 0" class="autocomplete-results">
+      <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+        {{ suggestion }}
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="caseResults.length > 0" class="results">
+    <div *ngFor="let result of caseResults" class="result-card">
+      <p><strong>Case:</strong> {{ result.fileNumber }}</p>
+      <p><strong>Box GUID:</strong> {{ result.boxGuid }}</p>
+      <p><strong>Box Status:</strong> {{ result.boxStatus }}</p>
+      <p><strong>Uploaded:</strong> {{ result.uploaded ? 'Yes' : 'No' }}</p>
+      <p><strong>Converted:</strong> {{ result.converted ? 'Yes' : 'No' }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="notFound && !caseResults.length" [ngClass]="{
+    'not-found': !boxInfo?.notFound,
+    'error-found': boxInfo?.notFound
+  }">
+    <p *ngIf="boxInfo?.notFound">
+      Case <b>{{ selectedType }} {{ searchTerm }}</b> was not found in the database!
+    </p>
+  
+    <ng-container *ngIf="!boxInfo?.notFound && boxInfo">
+      <p *ngIf="boxInfo.isMissing; else notProcessedText">
+        <b>Case {{ displayCase }}</b> is marked as missing!
+      </p>
+  
+      <ng-template #notProcessedText>
+        <p>
+          <b>Case {{ displayCase }}</b> not yet processed!
+        </p>
+      </ng-template>
+  
+      <p><strong>Box GUID:</strong> {{ boxInfo.boxGuid }}</p>
+      <p><strong>Box Status:</strong> {{ boxInfo.status }}</p>
+      <p><strong>Case is missing?</strong> {{ boxInfo.isMissing ? 'Yes' : 'No' }}</p>
+    </ng-container>
+  </div>
+  
+</div>

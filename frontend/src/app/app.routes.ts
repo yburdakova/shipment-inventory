@@ -9,6 +9,7 @@ import { ReturnComponent } from './pages/return/return.component';
 import { BoxDetailsComponent } from './pages/box-details/box-details.component';
 import { DeliveryDetailsComponent } from './pages/delivery-details/delivery-details.component';
 import { ConversionToolComponent } from './pages/conversion-tool/conversion-tool.component';
+import { PullRequestToolComponent } from './pages/pull-request-tool/pull-request-tool.component';
 
 export const routes: Routes = [
   { path: '', component: AuthComponent },
@@ -24,7 +25,8 @@ export const routes: Routes = [
           { path: 'project/:id', component: ProjectDetailsComponent },
           { path: 'box/:id', component: BoxDetailsComponent },
           { path: 'project/:id/:deliveryDate', component: DeliveryDetailsComponent},
-          { path: 'conversion-tool', component: ConversionToolComponent  }
+          { path: 'conversion-tool', component: ConversionToolComponent  },
+          { path: 'pull-request-tool', component: PullRequestToolComponent  }
         ]
       },
       { path: 'delivery', component: DeliveryComponent },

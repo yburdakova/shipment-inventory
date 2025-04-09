@@ -36,6 +36,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/dashboard/conversion-tool']);
   }
 
+  goToPullRequestTool() {
+    this.router.navigate(['/dashboard/pull-request-tool']);
+  }
+
   ngOnInit(): void {
 
     this.loggedInUser = this.userService.getUser();
