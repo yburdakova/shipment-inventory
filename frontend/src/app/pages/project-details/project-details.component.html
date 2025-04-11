@@ -21,7 +21,7 @@
   </div>
   <div class="info-line">
     <p><strong>Boxes in Storage:</strong>  
-      {{ stats.total - stats.statuses.returned_uns -stats.statuses.returned }}
+      {{ stats.total - stats.statuses.boxed - stats.statuses.returned_uns -stats.statuses.returned }}
     </p> 
     <p><strong>Ready for Return:</strong>  
       {{ stats.statuses.reviewc + stats.statuses.uploaded + stats.statuses.finalized }}
