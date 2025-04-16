@@ -89,3 +89,12 @@ ul svg {
     color: #155883;
   }
 }
+
+.qucksearch-active{
+  svg{
+    fill: var(--primary-color);
+  }
+  .tool-box-label{
+    color:  var(--primary-color);
+  }
+}

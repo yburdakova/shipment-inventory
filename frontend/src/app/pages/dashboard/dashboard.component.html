@@ -3,7 +3,7 @@
     <div 
       class="tool-box" 
       (click)="toggleQuickSearch()"  
-      [class.st-active]="isQuickSearchActive" 
+      [class.qucksearch-active]="isQuickSearchActive"
     >
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M40-120v-200h80v120h120v80H40Zm680 0v-80h120v-120h80v200H720ZM160-240v-480h80v480h-80Zm120 0v-480h40v480h-40Zm120 0v-480h80v480h-80Zm120 0v-480h120v480H520Zm160 0v-480h40v480h-40Zm80 0v-480h40v480h-40ZM40-640v-200h200v80H120v120H40Zm800 0v-120H720v-80h200v200h-80Z"/></svg>
       <div class="tool-box-label">Quick Search</div>
@@ -18,39 +18,57 @@
 
     <div 
       class="tool-box"
+      id="pullRequestTool"
+      (click)="goToPullRequestTool()"
+      [class.st-active]="activeToolBox === 'pullRequestTool'"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m488-400-65 65 56 56 161-161-161-161-56 56 65 65H320v80h168ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/></svg>
+      <div class="tool-box-label">Case Search</div>
+    </div>
+
+    <div 
+      class="tool-box"
+      id="statsBtn"
+      (click)="goToProjectStats()"
+      [class.st-active]="activeToolBox === 'statsBtn'"
+      *ngIf="!isAdmin"
+    >
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M200-120q-33 0-56.5-23.5T120-200v-640h80v640h640v80H200Zm40-120v-360h160v360H240Zm200 0v-560h160v560H440Zm200 0v-200h160v200H640Z"/></svg>
+      <div class="tool-box-label">Inventory Stats</div>
+    </div>
+
+    <div 
+      class="tool-box"
       id="conversionTool"
       (click)="goToConversionTool()"
+      [class.st-active]="activeToolBox === 'conversionTool'"
+      *ngIf="isAdmin"
     >
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M360-460h40v-80h40q17 0 28.5-11.5T480-580v-40q0-17-11.5-28.5T440-660h-80v200Zm40-120v-40h40v40h-40Zm120 120h80q17 0 28.5-11.5T640-500v-120q0-17-11.5-28.5T600-660h-80v200Zm40-40v-120h40v120h-40Zm120 40h40v-80h40v-40h-40v-40h40v-40h-80v200ZM320-240q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z"/></svg>
       <div class="tool-box-label">Conversion Tool</div>
     </div>
 
-    <div 
-      class="tool-box"
-      id="pullRequestTool"
-      (click)="goToPullRequestTool()"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="m488-400-65 65 56 56 161-161-161-161-56 56 65 65H320v80h168ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Z"/></svg>
-      <div class="tool-box-label">Pull Request Tool</div>
+    <div *ngIf="isAdmin">
+      <h3>Projects:</h3>
+      <ul>
+        <li *ngFor="let project of projects">
+          <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          height="24px" 
+          viewBox="0 -960 960 960" 
+          width="24px" 
+          [class.favorite]="favoriteProjectId === project.ID" 
+          (click)="setFavoriteProject(project.ID)">
+          <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Z"/>
+        </svg>
+          <div class="label"  (click)="selectProject(project)">
+            {{ project.Description }}
+          </div>
+        </li>
+      </ul>
     </div>
     
-    <h3>Projects:</h3>
-    <ul>
-      <li *ngFor="let project of projects">
-        <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        height="24px" 
-        viewBox="0 -960 960 960" 
-        width="24px" 
-        [class.favorite]="favoriteProjectId === project.ID" 
-        (click)="setFavoriteProject(project.ID)">
-        <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143Z"/>
-      </svg>
-        <div class="label"  (click)="selectProject(project)">
-          {{ project.Description }}
-        </div>
-      </li>
-    </ul>
+    
   </div>
   
   <div class="project-details">

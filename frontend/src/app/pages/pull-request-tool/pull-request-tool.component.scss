@@ -168,6 +168,7 @@
   border: none;
   font-size: x-large;
   cursor: pointer;
+  background-color: transparent;
 
   &:disabled {
     cursor: not-allowed;

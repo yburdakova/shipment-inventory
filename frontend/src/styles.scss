@@ -17,7 +17,40 @@ body{
   display: flex;
   justify-content: center;
   scroll-behavior: smooth;
-  height: 100vh;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  padding: 6px 16px;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  border-radius: 8px;
+  color: rgb(255, 255, 255);
+  background-color: #4A7BD0;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.75;
+  min-width: 64px;
+}
+
+button:disabled{
+  background-color: gray;
+  cursor: not-allowed;
 }
 
 .btn{

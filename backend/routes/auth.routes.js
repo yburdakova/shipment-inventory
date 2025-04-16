@@ -32,7 +32,8 @@ router.post('/login', async (req, res) => {
             id: user.ID,
             firstName: user.FirstName,
             lastName: user.LastName,
-            role: user.UserRoleID
+            role: user.UserRoleID,
+            currentProjectId: user.CurrentProjectID
         });
     } catch (error) {
         console.error('Database error:', error);

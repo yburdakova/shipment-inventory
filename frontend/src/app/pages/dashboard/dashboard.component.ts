@@ -16,12 +16,14 @@ import { BoxService } from '../../services/box.service';
 export class DashboardComponent implements OnInit {
   @ViewChild('quickSearchInput') quickSearchInput!: ElementRef<HTMLInputElement>;
   
-  loggedInUser: { firstName: string; lastName: string } | null = null; 
+  loggedInUser: { firstName: string; lastName: string; role: number; currentProjectId: number } | null = null;
   projects: any[] = [];
   selectedProjectId: number | null = null;
   favoriteProjectId: number | null = null;
   isQuickSearchActive: boolean = false;
   isDashboardPage: boolean = false;
+  isAdmin = false;
+  activeToolBox: string  = "statsBtn";
 
   constructor(
     private userService: UserService,
@@ -31,22 +33,44 @@ export class DashboardComponent implements OnInit {
     private router: Router
   ) {}
 
+  setActiveToolBox(id: string): void {
+    this.activeToolBox = id;
+  }
+
   goToConversionTool() {
+    this.isQuickSearchActive = false;
     console.log('Navigating to conversion tool...');
+    this.setActiveToolBox('conversionTool');
     this.router.navigate(['/dashboard/conversion-tool']);
   }
 
+  goToProjectStats() {
+    this.isQuickSearchActive = false;
+    console.log('Navigating to project stats...');
+    this.setActiveToolBox('statsBtn');
+    if (this.loggedInUser) {
+      this.router.navigate([`/dashboard/project/${this.loggedInUser.currentProjectId}`]);
+    } else {
+      this.router.navigate(['/']); 
+    }
+  }
+
   goToPullRequestTool() {
+    this.isQuickSearchActive = false;
+    this.setActiveToolBox('pullRequestTool');
     this.router.navigate(['/dashboard/pull-request-tool']);
   }
 
   ngOnInit(): void {
 
     this.loggedInUser = this.userService.getUser();
+    
     if (!this.loggedInUser) {
       this.router.navigate(['/']);
       return;
     }
+
+    this.isAdmin = this.loggedInUser.role === 1; 
 
     this.router.events.subscribe(() => {
       this.isDashboardPage = this.router.url === '/dashboard';
@@ -129,6 +153,7 @@ export class DashboardComponent implements OnInit {
       next: (response) => {
         if (response && response.ID) {
           this.router.navigate([`/dashboard/box/${response.ID}`]);
+          this.setActiveToolBox("");
         } else {
           alert('Box not found.');
         }

@@ -1,0 +1,32 @@
+<div class="inputBox">
+    <div [ngClass]="{
+          'floatingLabelInput': true,
+          'focused': (isFocused || value)
+        }">
+  
+      <input
+        [required]="required"
+        [type]="inputType"
+        [value]="value"
+        (input)="handleInput($event)"
+        (focus)="handleFocus()"
+        (blur)="handleBlur()"
+        [placeholder]="' '"
+        [ngClass]="{
+          'input': true,
+          'hidePlaceholder': isFocused
+        }"
+      />
+  
+      <div *ngIf="type === 'password'" (click)="toggleShowPassword()" class="togglePasswordButton">
+        <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+      </div>
+  
+      <label [ngClass]="{
+        'filled': value || isFocused,
+        'label': true
+      }">
+        {{ label }}
+      </label>
+    </div>
+  </div>

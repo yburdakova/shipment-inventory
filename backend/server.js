@@ -10,7 +10,7 @@ import returnRoutes from './routes/returned.routes.js';
 import boxRoutes from './routes/box.routes.js';
 import caseRoutes from './routes/converted.routes.js';
 import caseSearchRoutes from './routes/case-search.routes.js';
-
+import loginRoutes from './routes/login.routes.js';
 
 dotenv.config();
 
@@ -28,6 +28,7 @@ app.use('/api/returns', returnRoutes);
 app.use('/api/boxes', boxRoutes);
 app.use('/api/cases', caseRoutes);
 app.use('/api/case-search', caseSearchRoutes);
+app.use('/api/users', loginRoutes);
 
 http.createServer(app).listen(PORT, () => {
     console.log(`API HTTP server running on port ${PORT}`);

@@ -10,9 +10,11 @@ import { BoxDetailsComponent } from './pages/box-details/box-details.component';
 import { DeliveryDetailsComponent } from './pages/delivery-details/delivery-details.component';
 import { ConversionToolComponent } from './pages/conversion-tool/conversion-tool.component';
 import { PullRequestToolComponent } from './pages/pull-request-tool/pull-request-tool.component';
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
-  { path: '', component: AuthComponent },
+  { path: '', component: LoginComponent },
+  { path: 'admin', component: AuthComponent },
   {
     path: '',
     component: LayoutComponent,

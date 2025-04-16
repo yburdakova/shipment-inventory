@@ -1,0 +1,61 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+    margin-top: 60px;
+  }
+  
+  .container{
+    width: 100%; 
+    max-width: 420px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .p{
+    margin-bottom: 20px;
+  }
+  
+  .logoBox{
+    width: 100px;
+    margin-bottom: 40px;
+  }
+  
+  .loginBox{
+    background-color: #253043;
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+    height: 240px;
+  }
+  
+  .loginBtn{
+    margin-top: 50px;
+  }
+  .link{
+    margin-top: 10px;
+  }
+  
+  .error {
+    position: absolute;
+    font-size: 12px;
+    bottom: 52px;
+    left: 0;
+    margin: 10px 40px;
+    color: red;
+    visibility: hidden;
+  }
+  
+  .error.active {
+    visibility: visible;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    .loginBox{
+      background-color: #fff;
+    }
+  }

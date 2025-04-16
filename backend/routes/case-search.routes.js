@@ -83,6 +83,30 @@ router.get('/autocomplete', async (req, res) => {
     }
   });
   
+  function isCaseMissing(caseNumber, missingFiles) {
+    const number = parseInt(caseNumber, 10);
+    if (isNaN(number) || !missingFiles) return false;
+  
+    const parts = missingFiles.split(',');
+  
+    for (const part of parts) {
+      if (part.includes('-')) {
+        const [start, end] = part.split('-').map(n => parseInt(n.trim(), 10));
+        if (!isNaN(start) && !isNaN(end) && number >= start && number <= end) {
+          return true;
+        }
+      } else {
+        const single = parseInt(part.trim(), 10);
+        if (!isNaN(single) && single === number) {
+          return true;
+        }
+      }
+    }
+  
+    return false;
+  }
+  
+  
   router.get('/find-box-case', async (req, res) => {
     try {
       const { caseNumber, caseTypeAbbr } = req.query;
@@ -111,7 +135,7 @@ router.get('/autocomplete', async (req, res) => {
           AND b.CaseTypeID = ?
         LIMIT 1
         `,
-        [caseNumber, caseTypeId]
+        [caseNumber, caseTypeId, ]
       );
   
       if (boxResults.length === 0) {
@@ -119,7 +143,7 @@ router.get('/autocomplete', async (req, res) => {
       }
   
       const box = boxResults[0];
-      const isMissing = box.MissingFiles?.includes(caseNumber) ?? false;
+      const isMissing = isCaseMissing(caseNumber, box.MissingFiles);
   
       res.json({
         boxGuid: box.BoxGuid,
@@ -131,6 +155,7 @@ router.get('/autocomplete', async (req, res) => {
       res.status(500).json({ error: 'Server error' });
     }
   });
+  
   
   
   export default router;

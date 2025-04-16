@@ -1,0 +1,108 @@
+.inputBox{
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    position: relative;
+    min-width: 300px;
+  
+  }
+  .floatingLabelInput {
+    position: relative;
+    border: 1px solid #57606E;
+    border-radius: 8px;
+  }
+  
+  .input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color:#253043;
+  }
+  .inputDark {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color:#1D2634;
+  }
+  
+  .label {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    color:  #57606E;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    padding: 0 6px;
+    background-color:#253043;
+  }
+  .labelDark{
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    color:  #57606E;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    padding: 0 6px;
+    background-color:#1D2634;
+  }
+  
+  .focused .label, .focusedDark .labelDark,
+  .input:not(:placeholder-shown) + .label,
+  .inputDark:not(:placeholder-shown) + .labelDark {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+  }
+  
+  .filled {
+    top: -20px;
+    left: 0px;
+    font-size: 12px;
+  }
+  
+  .hidePlaceholder::placeholder {
+    color: transparent;
+  }
+  .togglePasswordButton{
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color:  #57606E;
+    
+  }
+  .clearButton {
+    position: absolute;
+    right: 5px;
+    top: 52%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #b2b2b1;
+    font-size: 1.2rem;
+  }
+  
+  .clearButton:hover {
+    color: #4A7BD0;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    .input, .label, .inputDark, .labelDark {
+      background-color: rgba(255, 255, 255, 0.863);
+    }
+  
+    .focused .label, .focusedDark .labelDark,
+    .input:not(:placeholder-shown) + .label,
+    .inputDark:not(:placeholder-shown) + .labelDark {
+      background-color: #ffffff
+    }
+  }

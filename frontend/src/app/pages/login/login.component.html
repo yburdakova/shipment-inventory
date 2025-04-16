@@ -1,0 +1,40 @@
+<div class="wrapper">
+    
+    <div class="container">
+        <div class="logo-box">
+            <img src='assets/CCSLogo.png' alt="Logo"/>
+          </div>
+      <h2>Boxy Inventory</h2>
+      <h3>Project Management Application <br /> for High-Volume Scanning Projects</h3>
+  
+      <div class="loginBox">
+        <div class="p"><strong>Enter your registration data</strong></div>
+  
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <app-custom-input
+            formControlName="username"
+            label="Username"
+            [required]="true"
+          ></app-custom-input>
+  
+          <app-custom-input
+            formControlName="password"
+            label="Password"
+            [type]="'password'"
+            [required]="true"
+          ></app-custom-input>
+  
+          <button type="submit" [disabled]="isFetching" class="loginBtn">
+            Log In
+          </button>
+
+        </form>
+
+        <div class="error" [class.active]="error">
+          {{ error }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
