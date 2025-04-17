@@ -33,7 +33,6 @@
   </div>
   <div class="grid-header">Range</div>
   <div class="grid-header">Status</div>
-  <div class="grid-header">Lifecycle</div>
 
 
   <ng-container *ngFor="let box of filteredBoxes; let i = index">
@@ -49,6 +48,5 @@
     </div>
     <div class="grid-item">{{ box.StartFileNumber }} - {{box.EndFileNumber}}</div>
     <div class="grid-item">{{ box.StatusLabel }}</div>
-    <div class="grid-item"></div>
   </ng-container>
 </div>
