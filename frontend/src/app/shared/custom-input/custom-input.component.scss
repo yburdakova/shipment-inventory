@@ -20,7 +20,7 @@
     font-size: 1rem;
     box-sizing: border-box;
     border-radius: 8px;
-    background-color:#253043;
+    background-color:#ffffff;
   }
   .inputDark {
     width: 100%;
@@ -30,7 +30,7 @@
     font-size: 1rem;
     box-sizing: border-box;
     border-radius: 8px;
-    background-color:#1D2634;
+    background-color:#ffffff;
   }
   
   .label {
@@ -41,7 +41,7 @@
     transition: all 0.3s ease;
     pointer-events: none;
     padding: 0 6px;
-    background-color:#253043;
+    background-color:#ffffff;
   }
   .labelDark{
     position: absolute;
@@ -51,7 +51,7 @@
     transition: all 0.3s ease;
     pointer-events: none;
     padding: 0 6px;
-    background-color:#1D2634;
+    background-color:#ffffff;
   }
   
   .focused .label, .focusedDark .labelDark,
@@ -93,16 +93,4 @@
   
   .clearButton:hover {
     color: #4A7BD0;
-  }
-  
-  @media (prefers-color-scheme: light) {
-    .input, .label, .inputDark, .labelDark {
-      background-color: rgba(255, 255, 255, 0.863);
-    }
-  
-    .focused .label, .focusedDark .labelDark,
-    .input:not(:placeholder-shown) + .label,
-    .inputDark:not(:placeholder-shown) + .labelDark {
-      background-color: #ffffff
-    }
   }
