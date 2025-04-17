@@ -4,6 +4,7 @@
   display: flex;
   gap: 2rem;
   height: 100%;
+  min-width: 100%;
   align-items: start;
 }
 
@@ -48,6 +49,10 @@ li{
 
 .favorite {
  fill: rgb(233, 204, 40) !important; 
+}
+
+.project-details{
+  width: 100%;
 }
 
 ul svg {

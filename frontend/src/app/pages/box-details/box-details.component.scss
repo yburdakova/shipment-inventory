@@ -1,11 +1,37 @@
+:host{
+  width: 100%;
+}
+
+.top-box{
+  display: flex;
+  gap: 20px;
+  max-width: 80%;
+}
+
+h3{
+  margin: 0;
+}
+
+.cirlce-title{
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.notes-title{
+margin-top: 10px;
+}
+.general-data{
+  min-width: 400px;
+}
+
 .box-details-title {
   font-size: 1.5rem;
   font-weight: 600;
 }
 
 .history-section {
-    margin-top: 20px;
+    margin-top: 6px;
     font-size: 14px;
+    width: 70%;
   }
   
   .grid-header, .grid-row {
@@ -49,3 +75,79 @@
     width: 24px;
     height: 24px;
   }
+
+  .lifecycle-chart {
+    width: 100%;
+
+    .lifecycle-bar {
+      display: flex;
+      height: 30px;
+      width: 100%;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+  
+    .lifecycle-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-weight: bold;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+  
+    .inspection {
+      background-color: #fca39c; 
+    }
+    .prep {
+      background-color: #f8e388;
+    }
+    .scan1 {
+      background-color: #a5fca8;
+    }
+    .scan2 {
+      background-color: #a8e0f9;
+    }
+    .review {
+      background-color: #f0a4fe;
+    }
+  
+    .lifecycle-labels {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+  
+      > div {
+        margin: 4px 8px;
+      }
+  
+      .total-time {
+        font-weight: bold;
+        margin-left: auto;
+      }
+    }
+  }
+  
+  .lifecycle-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    align-items: center;
+  
+    div {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  
+    .legend-color {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }}

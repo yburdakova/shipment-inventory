@@ -58,4 +58,9 @@ export class BoxDetailsComponent implements OnInit {
   toggleSortOrder(): void {
     this.sortAscending = !this.sortAscending;
   }
+
+  get totalTime(): number {
+    const b = this.boxData;
+    return b ? (b.Inspection_Time ?? 0) + (b.Prep_Time ?? 0) + (b.Scan1_Time ?? 0) + (b.Scan2_Time ?? 0) + (b.Review_Time ?? 0) : 0;
+  }
 }

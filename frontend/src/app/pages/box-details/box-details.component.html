@@ -5,11 +5,69 @@
     </div>       
   
     <ng-container *ngIf="boxData; else loadingTemplate">
-      <p><strong>Current status:</strong> {{ boxData.CurrentStatus }}</p>
-      <p><strong>Folder Range:</strong> {{ boxData.StartFileNumber }} - {{boxData.EndFileNumber}}</p>
-      <p><strong>Missing Files:</strong> {{ boxData.MissingFiles || 'None' }}</p>
-      <p><strong>Pages:</strong> {{ boxData.NumberOfPages }}</p>
-  
+      <div class="top-box">
+        <div class="general-data">
+          <p><strong>Current status:</strong> {{ boxData.CurrentStatus }}</p>
+          <p><strong>Folder Range:</strong> {{ boxData.StartFileNumber }} - {{boxData.EndFileNumber}}</p>
+          <p><strong>Missing Files:</strong> {{ boxData.MissingFiles || 'None' }}</p>
+          <p><strong>Pages:</strong> {{ boxData.NumberOfPages }}</p>
+        </div>
+        <div class="lifecycle-chart" *ngIf="boxData">
+          <h4 class="cirlce-title">LifeCycle Duration: <span class="total-time">{{ totalTime }} min</span></h4>
+          <div class="lifecycle-bar">
+            <div 
+              class="lifecycle-segment inspection" 
+              [ngStyle]="{ 'flex-grow': boxData.Inspection_Time || 0 }"
+              *ngIf="boxData.Inspection_Time"
+            >
+              {{ boxData.Inspection_Time }}
+            </div>
+            <div 
+              class="lifecycle-segment prep" 
+              [ngStyle]="{ 'flex-grow': boxData.Prep_Time || 0 }"
+              *ngIf="boxData.Prep_Time"
+            >
+              {{ boxData.Prep_Time }}
+            </div>
+            <div 
+              class="lifecycle-segment scan1" 
+              [ngStyle]="{ 'flex-grow': boxData.Scan1_Time || 0 }"
+              *ngIf="boxData.Scan1_Time"
+            >
+              {{ boxData.Scan1_Time }}
+            </div>
+            <div 
+              class="lifecycle-segment scan2" 
+              [ngStyle]="{ 'flex-grow': boxData.Scan2_Time || 0 }"
+              *ngIf="boxData.Scan2_Time"
+            >
+              {{ boxData.Scan2_Time }}
+            </div>
+            <div 
+              class="lifecycle-segment review" 
+              [ngStyle]="{ 'flex-grow': boxData.Review_Time || 0 }"
+              *ngIf="boxData.Review_Time"
+            >
+              {{ boxData.Review_Time }}
+            </div>
+          </div>
+        
+          <div class="lifecycle-legend">
+            <div><span class="legend-color inspection"></span>Inspection</div>
+            <div><span class="legend-color prep"></span>Preparation</div>
+            <div><span class="legend-color scan1"></span>Scanning 1</div>
+            <div><span class="legend-color scan2"></span>Scanning 2</div>
+            <div><span class="legend-color review"></span>Review</div>
+          </div>
+          <div *ngIf="boxData?.Notes?.length" class="notes-section">
+            <h3 class="notes-title">Notes:</h3>
+            <ul>
+              <li *ngFor="let note of boxData.Notes">{{ note }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
       <div class="history-section">
         <h3>Box History</h3>
         <div class="grid-header">
