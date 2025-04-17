@@ -26,7 +26,7 @@
   }
   
   .loginBox{
-    background-color: #253043;
+    background-color: #fff;
     border-radius: 20px;
     padding: 40px;
     position: relative;
@@ -54,8 +54,3 @@
     visibility: visible;
   }
   
-  @media (prefers-color-scheme: light) {
-    .loginBox{
-      background-color: #fff;
-    }
-  }
