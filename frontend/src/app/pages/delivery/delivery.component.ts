@@ -98,7 +98,8 @@ export class DeliveryComponent implements AfterViewInit {
 
   handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      const barcode = this.scanBoxInput.nativeElement.value.trim();
+      let barcode = this.scanBoxInput.nativeElement.value.trim();
+      barcode = barcode.replace(/^([a-zA-Z]{3})/, (_: string, letters: string) => letters.toUpperCase());
       this.processScan(barcode);
     }
   }

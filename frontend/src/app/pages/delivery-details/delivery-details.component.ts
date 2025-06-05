@@ -119,7 +119,7 @@ export class DeliveryDetailsComponent implements OnInit {
       return;
     }
 
-    const header = ["#", "Box GUID", "Status"].join("\t");
+    const header = ["#", "Box GUID", "Range", "Status"].join("\t");
     const rows = this.filteredBoxes.map((box, index) => [
       index + 1,
       box.BoxGUID,
