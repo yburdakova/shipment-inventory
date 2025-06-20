@@ -123,6 +123,7 @@ export class DeliveryDetailsComponent implements OnInit {
     const rows = this.filteredBoxes.map((box, index) => [
       index + 1,
       box.BoxGUID,
+      `${box.StartFileNumber} - ${box.EndFileNumber}`,
       box.StatusLabel
     ].join("\t"));
 
