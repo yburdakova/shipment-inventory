@@ -82,7 +82,10 @@ export class DashboardComponent implements OnInit {
         console.log('Projects loaded:', this.projects);
 
         const savedFavoriteProjectId = localStorage.getItem('favoriteProjectId');
-        if (savedFavoriteProjectId) {
+
+        if (this.loggedInUser?.role === 4) {
+          this.selectProjectById(this.loggedInUser.currentProjectId);
+        } else if (savedFavoriteProjectId) {
           this.favoriteProjectId = parseInt(savedFavoriteProjectId, 10);
           this.selectProjectById(this.favoriteProjectId);
         }
@@ -94,6 +97,7 @@ export class DashboardComponent implements OnInit {
         console.log('Project loading completed.');
       }
     });
+
   }
   
   selectProject(project: { ID: number; Description: string }): void {
